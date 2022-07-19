@@ -1,0 +1,9 @@
+.root {
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+
+  :global .MuiAutocomplete-tag {
+    display: none;
+  }
+}

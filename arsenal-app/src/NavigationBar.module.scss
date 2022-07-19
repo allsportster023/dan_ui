@@ -1,0 +1,33 @@
+
+$drawerWidth: 240px;
+$drawerTransition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+
+.root {
+  display: flex;
+}
+
+.drawer {
+  width: $drawerWidth;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.drawerOpen {
+  width: $drawerWidth;
+  transition: $drawerTransition !important;
+}
+
+.drawerClose {
+  overflow-x: hidden;
+  transition: $drawerTransition !important;
+  width: 57px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0px 8px;
+  margin-top: 18px;
+  min-height: 64px
+}

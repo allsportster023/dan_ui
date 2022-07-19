@@ -1,0 +1,55 @@
+.root {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pageTitleContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.pageTitle {
+  white-space: nowrap;
+  color: inherit !important;
+}
+
+.settingsPanel {
+  box-shadow: rgb(255 255 255 / 24%) 0px 3px 8px;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .25s ease-in-out;
+}
+
+.settingsPanelOpen {
+  max-height: 100vh;
+}
+
+.groupBySettingsColumn {
+  min-width: 200px;
+}
+
+.chartsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%,
+}
+
+.exportBlackText {
+  color: black !important;
+
+  :global .MuiTableCell-root {
+    color: black !important;
+  }
+
+  :global .MuiPaper-root {
+    background: white;
+  }
+}
+
+.exportWhiteText {
+  color: inherit;
+}

@@ -1,0 +1,53 @@
+.settingsPanelBody {
+  display: flex;
+  flex-direction: column
+}
+
+.threeColumns {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 1em;
+}
+
+.twoColumns {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 1em;
+}
+
+.scrollingSelection {
+  height: 360px;
+  overflow-y: auto;
+}
+
+.settingsColumn {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.spaceBetweenLabels {
+  :global .MuiFormControlLabel-root {
+      justify-content: space-between;
+      margin-left: 0;
+      margin-right: 0;
+
+      .MuiFormControlLabel-label {
+        margin-right: 1em;
+      }
+  }
+}
+
+.borderBottomLight {
+  border-bottom: 1px #666 solid;
+}
+
+.smallInput {
+  min-width: 65px;
+  max-width: 65px;
+}
+
+.mediumInput {
+  min-width: 85px;
+  max-width: 85px;
+}

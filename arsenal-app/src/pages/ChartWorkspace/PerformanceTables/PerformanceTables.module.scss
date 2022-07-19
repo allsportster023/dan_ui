@@ -1,0 +1,37 @@
+.performanceTable {
+  overflow-y: hidden;
+
+  & + .performanceTable {
+    margin-top: 2em;
+  }
+
+  :global .MuiTableCell-head {
+    font-weight: bold;
+  }
+}
+
+.signalName {
+  font-size: 1.25rem;
+}
+
+.verticalColumnContainer {
+  display: flex;
+  flex-flow: column nowrap;
+
+  * + * {
+    margin-top: 0.25em;
+  }
+}
+
+.configDetails {
+  * {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+}
+
+.valueText {
+  color: black;
+  font-weight: bold;
+}

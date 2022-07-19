@@ -1,0 +1,6 @@
+.barChartContainer {
+  &:not(:last-child) {
+    border-bottom: 1px currentColor solid;
+    overflow-y: hidden;
+  }
+}

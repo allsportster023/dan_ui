@@ -1,0 +1,28 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: move;
+  &:nth-child(even) {
+      background: #484848;
+  }
+}
+
+.systemTextContainer {
+  flex: auto;
+}
+
+.systemName {
+  max-width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.systemNameOriginal {
+  font-size: 0.65rem;
+}
+
+.actionIcon {
+  cursor: pointer;
+}

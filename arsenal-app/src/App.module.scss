@@ -1,0 +1,68 @@
+$drawerWidth: 240px;
+$classificationHeight: 20px;
+$toolbarHeight: 64px;
+$appBarTransition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms, margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+
+.root {
+  display: flex
+}
+
+.appLogo {
+  height: $toolbarHeight;
+  pointer-events: none;
+}
+
+.appBar {
+  top: $classificationHeight !important;
+  z-index: 999999 !important;
+  transition: $appBarTransition !important;
+}
+
+.appBarShift {
+  margin-left: $drawerWidth !important;
+  width: calc(100% - $drawerWidth) !important;
+  transition: $appBarTransition !important;
+}
+
+.appHelp {
+  margin-left: auto;
+  display: flex;
+  vertical-align: middle;
+}
+
+.helpIcon {
+  margin-left: 4px;
+}
+
+a:link,
+a:visited,
+a:active {
+  color: white !important;
+}
+
+a:hover {
+  color: #929292 !important;
+}
+
+.menuButton {
+  margin-right: 36px;
+}
+
+.hideDrawerButton {
+  visibility: hidden;
+}
+
+.content {
+  margin-top: ($classificationHeight + $toolbarHeight);
+  margin-bottom: $classificationHeight;
+  flex-grow: 1;
+}
+
+.classificationBanner {
+  position: fixed;
+  width: 100vw;
+  height: $classificationHeight;
+  color: black;
+  text-align: center;
+  z-index: 1500
+}

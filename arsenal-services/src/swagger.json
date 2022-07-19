@@ -1,0 +1,325 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Arsenal API",
+    "description": "The API that drives the Web Arsenal Tool",
+    "contact": {
+      "email": "bslaughter@icr-team.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags": [
+    {
+      "name": "Search",
+      "description": "API routes to search for specific elements in the database"
+    },
+    {
+      "name": "Calculations",
+      "description": "API routes to perform Arsenal calculations"
+    },
+    {
+      "name": "Database",
+      "description": "API routes to view the contents of the database"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/system": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Search for a given system",
+        "description": "Allows user to search for a given system to get the ID required to put into the /thresholds Calculations route",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Any part of a string to search for the desired system (case insensitive) [ Enter '*' for all systems ]",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid or no 'name' string supplied"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/signal": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Search for a given signal",
+        "description": "Allows user to search for a given signal to get the ID required to put into the /thresholds Calculations route",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Any part of a string to search for the desired signal (case insensitive) [ Enter '*' for all signals ]",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation"
+          },
+          "400": {
+            "description": "Invalid or no 'name' string supplied"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/thresholds": {
+      "get": {
+        "tags": [
+          "Calculations"
+        ],
+        "summary": "Calculate Ribbon Chart thresholds",
+        "description": "Calculates the performance thresholds of the platform against the given signal",
+        "parameters": [
+          {
+            "name": "systemId",
+            "in": "query",
+            "description": "ID of the system/platform to calculate (from the 'systems' table)",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "signalId",
+            "in": "query",
+            "description": "ID of the signal to calculate (from the 'signals' table)",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "useTestData",
+            "in": "query",
+            "description": "Boolean flag to include or exclude test data",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "jammerPower",
+            "in": "query",
+            "description": "The power of a simulated jammer in dBW to calculate range rings from",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "jammerRangeUnits",
+            "in": "query",
+            "description": "The units of the desired jammer ranges",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "nm",
+              "mi",
+              "km",
+              "m",
+              "ft"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "schema": {
+              "$ref": "#/definitions/Thresholds"
+            }
+          },
+          "400": {
+            "description": "Invalid or no ID supplied"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/checkclass": {
+      "get": {
+        "tags": [
+          "Calculations"
+        ],
+        "summary": "Check classification string",
+        "description": "Checks the classification string",
+        "parameters": [
+          {
+            "name": "classString",
+            "in": "query",
+            "description": "Classification string",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cumulative",
+            "in": "query",
+            "description": "Cumulative",
+            "required": true,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation"
+          },
+          "400": {
+            "description": "Invalid or no classification string supplied"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/tables": {
+      "get": {
+        "tags": [
+          "Database"
+        ],
+        "summary": "Lists the tables in the database",
+        "responses": {
+          "200": {
+            "description": "Successful Operation"
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/api/rows/{table}": {
+      "get": {
+        "tags": [
+          "Database"
+        ],
+        "summary": "Lists the contents of the requested table",
+        "parameters": [
+          {
+            "name": "table",
+            "in": "path",
+            "description": "Name of the desired table from the /api/tables route",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation"
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Thresholds": {
+      "type": "object",
+      "properties": {
+        "system": {
+          "type": "string"
+        },
+        "signal": {
+          "type": "string"
+        },
+        "degAcq": {
+          "type": "integer"
+        },
+        "noAcq": {
+          "type": "integer"
+        },
+        "degTrk": {
+          "type": "integer"
+        },
+        "noTrk": {
+          "type": "integer"
+        },
+        "degAcqEst": {
+          "type": "boolean"
+        },
+        "noAcqEst": {
+          "type": "boolean"
+        },
+        "degTrkEst": {
+          "type": "boolean"
+        },
+        "noTrkEst": {
+          "type": "boolean"
+        },
+        "asOfDate": {
+          "type": "integer"
+        },
+        "configData": {
+          "type": "object",
+          "properties": {
+            "systemCountry": {
+              "type": "string"
+            },
+            "systemAgency": {
+              "type": "string"
+            },
+            "systemType": {
+              "type": "string"
+            },
+            "systemUse": {
+              "type": "string"
+            },
+            "receiverName": {
+              "type": "string"
+            },
+            "coupling": {
+              "type": "string"
+            },
+            "imu": {
+              "type": "string"
+            },
+            "antennaName": {
+              "type": "string"
+            },
+            "antennaElectronics": {
+              "type": "string"
+            },
+            "antiJamInfo": {
+              "type": "string"
+            }
+          }
+        },
+        "jammerRanges": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

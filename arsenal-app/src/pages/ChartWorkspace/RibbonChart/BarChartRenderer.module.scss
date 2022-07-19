@@ -1,0 +1,44 @@
+.tooltip {
+  padding: 15px;
+  color: black;
+}
+
+.legendContainer {
+  text-align: center;
+}
+
+.legend {
+  display: inline-flex;
+  flex-flow: column nowrap;
+  color: black;
+}
+
+.legendLine {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
+
+.legendLineItem {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.legendBox {
+  height: 14px;
+  width: 14px;
+  display: inline-block;
+}
+
+.noWrap {
+  white-space: nowrap;
+}
+
+.outerContainer {
+  :global .recharts-bar-rectangle {
+    stroke: currentColor;
+    stroke-width: 3px;
+    stroke-opacity: 0.6;
+  }
+}

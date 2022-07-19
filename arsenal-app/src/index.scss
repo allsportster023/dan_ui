@@ -1,0 +1,24 @@
+$theme: dark;
+
+@import "~@icr/sass-common/common-styles";
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('~@icr/sass-common/fonts/Roboto-Regular.ttf') format('truetype')
+}
+@font-face {
+  font-family: 'RobotoMedium';
+  src: url('~@icr/sass-common/fonts/Roboto-Medium.ttf') format('truetype')
+}
+@font-face {
+  font-family: 'RobotoLight';
+  src: url('~@icr/sass-common/fonts/Roboto-Light.ttf') format('truetype')
+}
+
+html, body {
+  height: unset !important;
+}
+
+html {
+  font-size: 13px;
+}
