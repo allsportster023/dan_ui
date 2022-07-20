@@ -5,12 +5,13 @@ import {
     InputLabel,
     MenuItem,
     Select,
+    Typography
  } from '@mui/material'
 import axios from 'axios'
 
 const baseUrl = "http://localhost:8080/";
 
-export const TargetSelect = ({target, handleSetTarget}) => {
+export const TargetSelect = ({target, handleTargetChange}) => {
 
     const [posRepsError, setPosRepsError] = useState(null)
     const [posRepsLoading, setPosRepsLoading] = useState(true)
@@ -18,7 +19,7 @@ export const TargetSelect = ({target, handleSetTarget}) => {
 
     const handleChange = (event) => {
         console.log('event.target.value: ', event.target.value)
-        handleSetTarget(event.target.value);
+        handleTargetChange(event.target.value);
       };
 
     useEffect(() => {
@@ -38,21 +39,29 @@ export const TargetSelect = ({target, handleSetTarget}) => {
       }, []);
 
   return (
-    <Box sx={{ mt: 4, minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id="target-select-label">Target</InputLabel>
+    // <Box sx={{ mt: 4, minWidth: 120 }}>
+      <FormControl 
+        // style={{width: 140}} 
+        fullWidth="true"
+        variant="standard">
+        {/* <InputLabel id="target-select-label">Target</InputLabel> */}
         <Select
           labelId="target-select-label"
           id="target-select"
           value={target}
           label="Target"
           onChange={handleChange}
+          disableUnderline
         >
             {!posRepsError && !posRepsLoading && posReps.map((posRep)=> {
-                return <MenuItem key={posRep.id} value={posRep.name}>{posRep.name}</MenuItem>
+                return <MenuItem key={posRep.id} value={posRep.name}>
+                  <Typography sx={{ fontSize: 14 }} color="text.secondary">
+                    {posRep.name}
+                    </Typography>
+                    </MenuItem>
             })}
         </Select>
       </FormControl>
-    </Box>
+    // </Box>
   )
 }

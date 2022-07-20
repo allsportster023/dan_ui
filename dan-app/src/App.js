@@ -4,10 +4,18 @@ import axios from 'axios';
 import { ThreatGrid } from './components/ThreatGrid'
 import NavBar from "./NavBar";
 import Map from "./Map";
+import {  ThemeProvider,
+  createTheme} from '@mui/material'
+
+import baseTheme from "./muiThemes/baseTheme.js";
+
 
 const baseUrl = "http://localhost:8080/";
 
 function App() {
+
+  const [theme, setTheme] = useState(baseTheme);
+
 
   const [threatsError, setThreatsError] = useState(null)
   const [threatsLoading, setThreatsLoading] = useState(true)
@@ -50,6 +58,8 @@ function App() {
   }, []);
 
   return (
+    <ThemeProvider theme={theme}>
+    
     <div className="App">
       <NavBar />
       <Map/>
@@ -63,6 +73,7 @@ function App() {
           setThreatsLoading={setThreatsLoading}/>
         }
     </div>
+    </ThemeProvider>
   );
 }
 
