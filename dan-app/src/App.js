@@ -52,22 +52,6 @@ function App() {
       });
   }, []);
 
-  useEffect(() => {
-    axios
-      .get(baseUrl + "pos_reps")
-      .then((response) => {
-        console.log("pos_reps: ", response.data)
-        setPosReps(response.data);
-      })
-      .catch((err) => {
-        console.log("there was an error getting pos_reps", err);
-        setPosRepError(err);
-      })
-      .finally(() => {
-        setPosRepLoading(false);
-      });
-  }, []);
-
   return (
     <ThemeProvider theme={theme}>
     <div className="App">
