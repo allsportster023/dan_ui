@@ -1,0 +1,58 @@
+{
+    "sams": [
+      {
+        "id": 1,
+        "name": "sam1",
+        "latitude": "37.01",
+        "longitude": "-76.11",
+        "target": "ac1",
+        "type": "SA-A"
+      },
+      {
+        "id": 2,
+        "name": "sam2",
+        "latitude": "37.31",
+        "longitude": "-76.51",
+        "target": "ac1",
+        "type": "SA-B"
+      },
+      {
+        "id": 3,
+        "name": "sam3",
+        "latitude": "37.51",
+        "longitude": "-75.71",
+        "target": "ac2",
+        "type": "SA-B"
+      }
+    ],
+    "pos_reps": [
+      {
+        "id": 1,
+        "name": "ac1",
+        "timestamp": 1658256422,
+        "azimuth": 0,
+        "latitude": 37.44,
+        "longitude": -75.12,
+        "velocity": 500
+      },
+      {
+        "id": 2,
+        "timestamp": 1658256422,
+        "name": "ac2",
+        "azimuth": 100,
+        "latitude": 37.624,
+        "longitude": -75.552,
+        "velocity": 600
+      },
+      {
+        "id": 3,
+        "timestamp": 1658256422,
+        "name": "ac3",
+        "azimuth": 344,
+        "latitude": 37.14,
+        "longitude": -75.62,
+        "velocity": 800
+      }
+    ]
+  }
+  
