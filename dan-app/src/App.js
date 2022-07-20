@@ -52,9 +52,9 @@ function App() {
   return (
     <div className="App">
       <NavBar />
-      <Map/>
-      {!threatsError && !threatsLoading && 
-        <ThreatGrid 
+        {!threatsError && !threatsLoading && <Map threats={threats}/>}
+        {!threatsError && !threatsLoading &&
+        <ThreatGrid
           threats={threats}
           setThreats={setThreats}
           threatsError={threatsError}

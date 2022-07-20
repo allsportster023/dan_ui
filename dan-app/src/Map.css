@@ -1,0 +1,15 @@
+.Map_marker {
+    display: block;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+}
+
+.Map_SamMarker {
+    height: 75px;
+    width: 75px;
+    background-image: url('./samIcon.svg');
+    background-size: contain;
+    cursor: pointer;
+}
