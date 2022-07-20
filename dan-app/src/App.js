@@ -2,9 +2,10 @@ import './App.css';
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { ThreatGrid } from './components/ThreatGrid'
+import NavBar from "./NavBar";
+import Map from "./Map";
 
 const baseUrl = "http://localhost:8080/";
-
 
 function App() {
 
@@ -50,15 +51,18 @@ function App() {
 
   return (
     <div className="App">
+      <NavBar />
+      {/* <Map/> */}
       {!threatsError && !threatsLoading && 
-      <ThreatGrid 
-      threats={threats}
-      setThreats={setThreats}
-      threatsError={threatsError}
-      setThreatsError={setThreatsError}
-      threatsLoading={threatsLoading}
-      setThreatsLoading={setThreatsLoading}/>}
-      </div>
+        <ThreatGrid 
+          threats={threats}
+          setThreats={setThreats}
+          threatsError={threatsError}
+          setThreatsError={setThreatsError}
+          threatsLoading={threatsLoading}
+          setThreatsLoading={setThreatsLoading}/>
+        }
+    </div>
   );
 }
 

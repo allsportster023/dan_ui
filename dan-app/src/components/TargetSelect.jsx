@@ -37,11 +37,6 @@ export const TargetSelect = ({target, handleSetTarget}) => {
           });
       }, []);
 
-
-
-
-
-
   return (
     <Box sx={{ mt: 4, minWidth: 120 }}>
       <FormControl fullWidth>
