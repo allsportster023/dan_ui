@@ -8,27 +8,27 @@ const baseUrl = "http://localhost:8080/";
 
 function App() {
 
-  const [samsError, setSamError] = useState(null)
-  const [samsLoading, setSamLoading] = useState(true)
-  const [sams, setSams] = useState([])
+  const [threatsError, setThreatsError] = useState(null)
+  const [threatsLoading, setThreatsLoading] = useState(true)
+  const [threats, setThreats] = useState([])
   const [posRepsError, setPosRepError] = useState(null)
   const [posRepsLoading, setPosRepLoading] = useState(true)
   const [posReps, setPosReps] = useState([])
 
   useEffect(() => {
     axios
-      .get(baseUrl + "sams")
+      .get(baseUrl + "threats")
       .then((response) => {
-        console.log("sams: ", sams)
+        console.log("threats: ", response.data)
 
-        setSams(response.data);
+        setThreats(response.data);
       })
       .catch((err) => {
-        console.log("there was an error getting sams", err);
-        setSamError(err);
+        console.log("there was an error getting threats", err);
+        setThreatsError(err);
       })
       .finally(() => {
-        setSamLoading(false);
+        setThreatsLoading(false);
       });
   }, []);
 
@@ -36,7 +36,7 @@ function App() {
     axios
       .get(baseUrl + "pos_reps")
       .then((response) => {
-        console.log("pos_reps: ", posReps)
+        console.log("pos_reps: ", response.data)
         setPosReps(response.data);
       })
       .catch((err) => {
@@ -50,7 +50,14 @@ function App() {
 
   return (
     <div className="App">
-      {!samsError && !samsLoading && <ThreatGrid sams={sams}/>}
+      {!threatsError && !threatsLoading && 
+      <ThreatGrid 
+      threats={threats}
+      setThreats={setThreats}
+      threatsError={threatsError}
+      setThreatsError={setThreatsError}
+      threatsLoading={threatsLoading}
+      setThreatsLoading={setThreatsLoading}/>}
       </div>
   );
 }
