@@ -1,0 +1,13 @@
+.NavBar_heading {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+.NavBar_heading > h1 {
+    padding: 10px;
+    margin: 0;
+}
+
