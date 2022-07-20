@@ -49,7 +49,7 @@ export const ThreatTypeSelect = ({threatType, handleThreatTypeChange}) => {
       <FormControl 
         // style={{ width: 140}} 
 
-        fullWidth="true" 
+        fullWidth={true}
         variant="standard" >
         {/* <InputLabel id="threatType-label">Threat Type</InputLabel> */}
         <Select

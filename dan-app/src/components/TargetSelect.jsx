@@ -68,7 +68,7 @@ export const TargetSelect = ({target, handleTargetChange}) => {
     // <Box sx={{ mt: 4, minWidth: 120 }}>
       <FormControl 
         // style={{width: 140}} 
-        fullWidth="true"
+        fullWidth={true}
         variant="standard">
         {/* <InputLabel id="target-select-label">Target</InputLabel> */}
         <Select

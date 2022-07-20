@@ -38,7 +38,7 @@ export const ThreatGrid = (props) => {
         <Grid container spacing={2}>
         {threats.map((threat) => {
             return (
-              <Grid item xs={3} style={{ maxWidth: 200}}>
+              <Grid key={"gridId" + threat.id} item xs={3} style={{ maxWidth: 200}}>
                 <ThreatCard 
                   key={threat.id} 
                   threat={threat}
