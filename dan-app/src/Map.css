@@ -13,3 +13,10 @@
     background-size: contain;
     cursor: pointer;
 }
+.Map_AircraftMarker {
+    height: 75px;
+    width: 75px;
+    background-image: url('./jetIcon.svg');
+    background-size: contain;
+    cursor: pointer;
+}
