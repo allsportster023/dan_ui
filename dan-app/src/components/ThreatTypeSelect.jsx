@@ -59,6 +59,7 @@ export const ThreatTypeSelect = ({threatType, handleThreatTypeChange}) => {
           label="Threat Type"
           onChange={handleChange}
           disableUnderline
+          defaultValue=""
         >
             {!threatTypesError && !threatTypesLoading && threatTypes.map((type)=> {
                 return <MenuItem key={type.id} value={type.name}>

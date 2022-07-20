@@ -1,4 +1,4 @@
-import { Card, Container, Stack} from '@mui/material'
+import { Card, Container, Grid, Stack} from '@mui/material'
 import axios from 'axios';
 
 import React, { useEffect, useState} from 'react'
@@ -22,7 +22,6 @@ export const ThreatGrid = (props) => {
         .get(baseUrl + "threats")
         .then((response) => {
           console.log("threats: ", response.data)
-  
           setThreats(response.data);
         })
         .catch((err) => {
@@ -35,15 +34,20 @@ export const ThreatGrid = (props) => {
       }
 
   return (
-    <Container>
-        <Stack direction="row">
+    <Container sx={{ flexGrow: 1 }}>
+        <Grid container spacing={2}>
         {threats.map((threat) => {
-            return <ThreatCard 
-            key={threat.id} 
-            threat={threat}
-            refreshThreatCards={refreshThreatCards}></ThreatCard>
+            return (
+              <Grid item xs={3} style={{ maxWidth: 200}}>
+                <ThreatCard 
+                  key={threat.id} 
+                  threat={threat}
+                  refreshThreatCards={refreshThreatCards}>
+                </ThreatCard>
+              </Grid>
+            )
         })}
-        </Stack>
+        </Grid>
     </Container>
   )
 }

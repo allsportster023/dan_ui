@@ -109,8 +109,8 @@ export const ThreatCard = ({threat, refreshThreatCards}) => {
 
   return (
     <>
-    <Card sx={{ width: 240, height: 140, m: 2 }}>
-      <CardContent>
+    <Card sx={{ width: "fit-content", height: 140, m: 2 }}>
+      <CardContent >
         <Stack direction="row" style={{justifyContent: "flex-end"}}>
           <Box 
             style={{
@@ -121,11 +121,13 @@ export const ThreatCard = ({threat, refreshThreatCards}) => {
                 : threat.status === 'moving' ? '#e3e84a'
                 : '#3ca836'),
               borderRadius: 50 
-              }}></Box></Stack>
+              }}>
+            </Box>
+        </Stack>
         <Typography sx={{ fontSize: 14 }} align="left" color="text.secondary" gutterBottom>
           Name: {threat.name}
         </Typography>
-<Stack direction="row">
+        <Stack direction="row">
         <Typography sx={{ fontSize: 14}} align="left" color="text.secondary" gutterBottom>
           Type: 
 

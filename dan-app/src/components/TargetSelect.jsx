@@ -78,6 +78,7 @@ export const TargetSelect = ({target, handleTargetChange}) => {
           label="Target"
           onChange={handleChange}
           disableUnderline
+          defaultValue=""
         >
             {menuItems}
         </Select>
