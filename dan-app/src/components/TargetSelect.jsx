@@ -38,6 +38,32 @@ export const TargetSelect = ({target, handleTargetChange}) => {
           });
       }, []);
 
+      let menuItems = []
+      if (!posRepsError && !posRepsLoading) {
+        menuItems = posReps.map((posRep)=> {
+          return <MenuItem key={posRep.id} value={posRep.name}>
+            <Typography 
+              sx={{ fontSize: 14, pl: 1 }} 
+              color="text.secondary"
+              align="left"
+              >
+              {posRep.name}
+              </Typography>
+              </MenuItem>
+      })
+      menuItems = [...menuItems, <MenuItem key={0} value={"None"}>
+        <Typography 
+          sx={{ fontSize: 14, pl: 1 }} 
+          color="text.secondary"
+          align="left"
+          >
+          None
+          </Typography>
+          </MenuItem>]
+      console.log("menu items: ", menuItems)
+      }
+    
+
   return (
     // <Box sx={{ mt: 4, minWidth: 120 }}>
       <FormControl 
@@ -53,13 +79,7 @@ export const TargetSelect = ({target, handleTargetChange}) => {
           onChange={handleChange}
           disableUnderline
         >
-            {!posRepsError && !posRepsLoading && posReps.map((posRep)=> {
-                return <MenuItem key={posRep.id} value={posRep.name}>
-                  <Typography sx={{ fontSize: 14 }} color="text.secondary">
-                    {posRep.name}
-                    </Typography>
-                    </MenuItem>
-            })}
+            {menuItems}
         </Select>
       </FormControl>
     // </Box>

@@ -33,7 +33,9 @@ export const ThreatCard = ({threat, refreshThreatCards}) => {
         longitude: threat.longitude,
         target: newTarget,
         threatType: threatType,
-        status: threat.status
+        status: threat.status,
+        az: threat.az,
+        el: threat.el
 
       });
       console.log("res in change target: ", res);
@@ -63,7 +65,9 @@ export const ThreatCard = ({threat, refreshThreatCards}) => {
         longitude: threat.longitude,
         target: target,
         threatType: newThreatType,
-        status: threat.status
+        status: threat.status,
+        az: threat.az,
+        el: threat.el
 
       });
       console.log("res in change target: ", res);

@@ -62,7 +62,11 @@ export const ThreatTypeSelect = ({threatType, handleThreatTypeChange}) => {
         >
             {!threatTypesError && !threatTypesLoading && threatTypes.map((type)=> {
                 return <MenuItem key={type.id} value={type.name}>
-                  <Typography sx={{ fontSize: 14 }} color="text.secondary">{type.name}</Typography>
+                  <Typography 
+                    sx={{ fontSize: 14, pl: 1 }} 
+                    color="text.secondary"
+                    align="left"
+                    >{type.name}</Typography>
                 </MenuItem>
             })}
         </Select>

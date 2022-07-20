@@ -4,19 +4,23 @@
       "name": "Threat 1",
       "latitude": "36.81",
       "longitude": "-76.41",
-      "target": "Aircraft 1",
+      "target": "None",
       "threatType": "Threat Type 1",
       "status": "not ready",
+      "az": 10.1,
+      "el": 1.1,
       "id": 1
     },
     {
-      "id": 2,
       "name": "Threat 2",
       "latitude": "37.31",
       "longitude": "-76.51",
-      "target": "Aircraft 2",
+      "target": "Aircraft 1",
       "threatType": "Threat Type 1",
-      "status": "moving"
+      "status": "moving",
+      "az": 355.1,
+      "el": 33.1,
+      "id": 2
     },
     {
       "id": 3,
@@ -25,7 +29,9 @@
       "longitude": "-75.71",
       "target": "Aircraft 2",
       "threatType": "Threat Type 2",
-      "status": "painted"
+      "status": "painted",
+      "az": 190.1,
+      "el": 88.1
     }
   ],
   "pos_reps": [
