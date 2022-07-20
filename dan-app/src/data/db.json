@@ -9,12 +9,12 @@
       "id": 1
     },
     {
-      "id": 2,
       "name": "Threat 2",
       "latitude": "37.31",
       "longitude": "-76.51",
-      "target": "Aircraft 1",
-      "threatType": "Threat Type 2"
+      "target": "Aircraft 2",
+      "threatType": "Threat Type 1",
+      "id": 2
     },
     {
       "id": 3,
