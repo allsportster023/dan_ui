@@ -4,6 +4,8 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import './App.css';
 import './Map.css';
 
+let aircraftMarkerArr = [];
+
 export default function Map({threats, posReps}) {
 
     const mapContainer = useRef(null);
@@ -13,7 +15,6 @@ export default function Map({threats, posReps}) {
     const [zoom] = useState(7);
     const [API_KEY] = useState('Ce9hgYWIkaeo6JSNYZbf');
 
-    let aircraftMarkerArr = [];
 
     useEffect(() => {
         if (map.current) return;
@@ -26,14 +27,9 @@ export default function Map({threats, posReps}) {
 
         map.current.addControl(new maplibregl.NavigationControl(), 'top-right');
 
-//         map.current.on('mousemove', function (e) {
-//             document.getElementById('info').innerHTML =
-// // e.point is the x, y coordinates of the mousemove event relative
-// // to the top-left corner of the map
-//
-//                 // e.lngLat is the longitude, latitude geographical position of the event
-//                 JSON.stringify(e.lngLat.wrap());
-//         });
+        // map.current.on('mousemove', function (e) {
+        //     document.getElementById('info').innerHTML = JSON.stringify(e.lngLat.wrap());
+        // });
 
         map.current.once("load", () => {
             // This code runs once the base style has finished loading.
@@ -83,17 +79,16 @@ export default function Map({threats, posReps}) {
     useEffect(() => {
 
         {
+
+            aircraftMarkerArr.map((marker) => {
+                marker.remove()
+            })
+
+            aircraftMarkerArr = []
+
             posReps.map((posRep) => {
 
-                console.log(aircraftMarkerArr)
-
-                aircraftMarkerArr.map((marker) => {
-
-                    console.log("Removing Marker: ", marker)
-                    marker.remove()
-                })
-
-                var targetIcon = document.createElement('div');
+                let targetIcon = document.createElement('div');
                 targetIcon.classList.add('Map_AircraftMarker');
 
                 console.log("Creating TargetIcon")
@@ -103,10 +98,7 @@ export default function Map({threats, posReps}) {
                     .setRotation(posRep.hdg)
                     .addTo(map.current);
 
-                aircraftMarkerArr = []
                 aircraftMarkerArr.push(newMarker)
-
-                console.log(aircraftMarkerArr)
 
             })
         }
@@ -114,6 +106,7 @@ export default function Map({threats, posReps}) {
 
     return (
         <div className="map-wrap">
+            {/*<pre id={"info"} />*/}
             <div ref={mapContainer} className="map"/>
         </div>
     );
