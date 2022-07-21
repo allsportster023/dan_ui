@@ -68,8 +68,14 @@ export default function Map({threats, posReps}) {
                 var threatIcon = document.createElement('div');
                 threatIcon.classList.add('Map_SamMarker');
 
+                const threatPopup = `<h3>${threat.name}</h3><h3>Target: ${threat.target}</h3>`
+                const threatPopup2 = new maplibregl.Popup().setHTML(threatPopup)
+                threatPopup2.className = 'Map_ThreatPopup'
+
                 new maplibregl.Marker(threatIcon)
                     .setLngLat([threat.longitude, threat.latitude])
+                    // .setPopup(new maplibregl.Popup().setHTML(threatPopup))
+                    .setPopup(threatPopup2)
                     .addTo(map.current);
             })
         }
@@ -87,9 +93,10 @@ export default function Map({threats, posReps}) {
             aircraftMarkerArr = []
 
             posReps.map((posRep) => {
-
                 let targetIcon = document.createElement('div');
                 targetIcon.classList.add('Map_AircraftMarker');
+                let label = document.createTextNode(posRep.name);
+                label.className = 'Map_AircraftLabel'
 
                 console.log("Creating TargetIcon")
 

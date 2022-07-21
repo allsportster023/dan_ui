@@ -9,7 +9,8 @@
       "status": "not ready",
       "az": 10.1,
       "el": 1.1,
-      "id": 1
+      "id": 1,
+      "range_to_target": null
     },
     {
       "name": "Threat 2",
@@ -20,7 +21,8 @@
       "status": "moving",
       "az": 355.1,
       "el": 33.1,
-      "id": 2
+      "id": 2,
+      "range_to_target": null
     },
     {
       "id": 3,
@@ -31,7 +33,8 @@
       "threatType": "Threat Type 2",
       "status": "painted",
       "az": 190.1,
-      "el": 88.1
+      "el": 88.1,
+      "range_to_target": 30000
     }
   ],
   "pos_reps": [

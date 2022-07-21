@@ -16,25 +16,39 @@ export const ThreatCard = ({threat, refreshThreatCards, posReps, client}) => {
 
     function handleTargetChange(newTarget) {
       setTarget(newTarget)
-
+      // if(newTarget === 'None') {
+      //   newTarget = ''
+      // }
+      
       const updatedThreat =
       {
         name: threat.name,
         latitude: threat.latitude,
         longitude: threat.longitude,
         target: newTarget,
-        threatType: threatType,
+        threatType: threat.threatType,
         status: threat.status,
         az: threat.az,
-        el: threat.el
+        el: threat.el,
+        range_to_target: threat.range_to_target
       }
+      console.log(updatedThreat)
       client.send(JSON.stringify(updatedThreat))
     }
   
     function handleThreatTypeChange(newThreatType) {
       setThreatType(newThreatType)
-      const updatedThreat = {
-        someField: "someString"
+      const updatedThreat =
+      {
+        name: threat.name,
+        latitude: threat.latitude,
+        longitude: threat.longitude,
+        target: threat.target,
+        threatType: newThreatType,
+        status: threat.status,
+        az: threat.az,
+        el: threat.el,
+        range_to_target: threat.range_to_target
       }
       client.send(JSON.stringify(updatedThreat))
     }
@@ -42,8 +56,8 @@ export const ThreatCard = ({threat, refreshThreatCards, posReps, client}) => {
 
   return (
     <>
-    <Card sx={{ width: "fit-content", height: 140, m: 2 }}>
-      <CardContent >
+    <Card sx={{ width: "fit-content", height: 140, m: 2}}>
+      <CardContent sx={{backgroundColor: '#fafcff'}}>
         <Stack direction="row" style={{justifyContent: "flex-end"}}>
           <Box 
             style={{
@@ -63,7 +77,6 @@ export const ThreatCard = ({threat, refreshThreatCards, posReps, client}) => {
         <Stack direction="row">
         <Typography sx={{ fontSize: 14}} align="left" color="text.secondary" gutterBottom>
           Type: 
-
         </Typography>     
         <ThreatTypeSelect threatType={threatType} handleThreatTypeChange={handleThreatTypeChange}/>
         </Stack>   
@@ -73,6 +86,9 @@ export const ThreatCard = ({threat, refreshThreatCards, posReps, client}) => {
         </Typography>
         <TargetSelect posReps={posReps} target={target} handleTargetChange={handleTargetChange}/>
         </Stack>
+        <Typography sx={{ fontSize: 14 }} align="left" color="text.secondary" gutterBottom>
+          Range to Target: {threat.target ? threat.range_to_target : '-'}
+        </Typography>
       </CardContent>
     </Card>
     </>

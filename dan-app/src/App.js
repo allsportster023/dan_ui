@@ -8,8 +8,8 @@ import { w3cwebsocket as W3CWebSocket } from "websocket";
 import {  ThemeProvider, createTheme} from '@mui/material'
 import baseTheme from "./muiThemes/baseTheme.js";
 
-// const client = new W3CWebSocket('ws://192.168.1.183:6969');
-const client = new W3CWebSocket('ws://localhost:6969');
+const client = new W3CWebSocket('ws://192.168.1.183:6969');
+// const client = new W3CWebSocket('ws://localhost:6969');
 const baseUrl = "http://localhost:8080/";
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
   client.onmessage = (message) => {
 
     if(message !== null){
-      console.log('message from ws: ', message)
+      console.log('message.data from ws: ', message.data)
       setPosReps([JSON.parse(message.data)])
     }
 
@@ -58,8 +58,8 @@ function App() {
     <ThemeProvider theme={theme}>
     <div className="App">
       <NavBar />
-          {!threatsError && !threatsLoading && <Map threats={threats} posReps={posReps}/>}
-        {!threatsError && !threatsLoading &&
+          {posReps && <Map threats={threats} posReps={posReps}/>}
+        {posReps &&
         <ThreatGrid
           threats={threats}
           posReps={posReps}

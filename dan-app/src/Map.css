@@ -20,3 +20,6 @@
     background-size: contain;
     cursor: pointer;
 }
+.Map_ThreatPopup {
+    background-color: blue;
+}

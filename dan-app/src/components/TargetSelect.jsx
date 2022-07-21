@@ -57,7 +57,7 @@ export const TargetSelect = ({target, handleTargetChange, posReps}) => {
           label="Target"
           onChange={handleChange}
           disableUnderline
-          defaultValue=""
+          // defaultValue=""
         >
             {menuItems}
         </Select>
