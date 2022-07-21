@@ -9,49 +9,31 @@ import {
  } from '@mui/material'
 import axios from 'axios'
 
-const baseUrl = "http://localhost:8080/";
 
-export const TargetSelect = ({target, handleTargetChange}) => {
+export const TargetSelect = ({target, handleTargetChange, posReps}) => {
 
-    const [posRepsError, setPosRepsError] = useState(null)
-    const [posRepsLoading, setPosRepsLoading] = useState(true)
-    const [posReps, setPosReps] = useState([])
+    console.log('posReps in select: ', posReps)
+
+    // fields in posRep: alt, gnd_spd, hdg, id, lat, lng, name, source, time
 
     const handleChange = (event) => {
-        console.log('event.target.value: ', event.target.value)
-        handleTargetChange(event.target.value);
-      };
+      console.log('event.target.value: ', event.target.value)
+      handleTargetChange(event.target.value);
+    };
+    let menuItems = []
 
-    useEffect(() => {
-        axios
-          .get(baseUrl + "pos_reps")
-          .then((response) => {
-            console.log("pos_reps in select component: ", response.data)
-            setPosReps(response.data);
-          })
-          .catch((err) => {
-            console.log("there was an error getting pos_reps", err);
-            setPosRepsError(err);
-          })
-          .finally(() => {
-            setPosRepsLoading(false);
-          });
-      }, []);
-
-      let menuItems = []
-      if (!posRepsError && !posRepsLoading) {
-        menuItems = posReps.map((posRep)=> {
-          return <MenuItem key={posRep.id} value={posRep.name}>
-            <Typography 
-              sx={{ fontSize: 14, pl: 1 }} 
-              color="text.secondary"
-              align="left"
-              >
-              {posRep.name}
-              </Typography>
-              </MenuItem>
+      menuItems = posReps.map((posRep)=> {
+        return <MenuItem key={posRep.id} value={posRep.name}>
+          <Typography 
+            sx={{ fontSize: 14, pl: 1 }} 
+            color="text.secondary"
+            align="left"
+            >
+            {posRep.name}
+            </Typography>
+            </MenuItem>
       })
-      menuItems = [...menuItems, <MenuItem key={0} value={"None"}>
+      menuItems = [...menuItems, <MenuItem key={-1} value={"None"}>
         <Typography 
           sx={{ fontSize: 14, pl: 1 }} 
           color="text.secondary"
@@ -61,16 +43,13 @@ export const TargetSelect = ({target, handleTargetChange}) => {
           </Typography>
           </MenuItem>]
       console.log("menu items: ", menuItems)
-      }
+    
     
 
   return (
-    // <Box sx={{ mt: 4, minWidth: 120 }}>
       <FormControl 
-        // style={{width: 140}} 
         fullWidth={true}
         variant="standard">
-        {/* <InputLabel id="target-select-label">Target</InputLabel> */}
         <Select
           labelId="target-select-label"
           id="target-select"
@@ -83,6 +62,5 @@ export const TargetSelect = ({target, handleTargetChange}) => {
             {menuItems}
         </Select>
       </FormControl>
-    // </Box>
   )
 }

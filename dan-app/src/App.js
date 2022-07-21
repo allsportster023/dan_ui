@@ -8,6 +8,7 @@ import { w3cwebsocket as W3CWebSocket } from "websocket";
 import {  ThemeProvider, createTheme} from '@mui/material'
 import baseTheme from "./muiThemes/baseTheme.js";
 
+// const client = new W3CWebSocket('ws://192.168.1.183:6969');
 const client = new W3CWebSocket('ws://localhost:6969');
 const baseUrl = "http://localhost:8080/";
 
@@ -17,8 +18,8 @@ function App() {
   const [threatsError, setThreatsError] = useState(null)
   const [threatsLoading, setThreatsLoading] = useState(true)
   const [threats, setThreats] = useState([])
-  const [posRepsError, setPosRepError] = useState(null)
-  const [posRepsLoading, setPosRepLoading] = useState(true)
+  // const [posRepsError, setPosRepError] = useState(null)
+  // const [posRepsLoading, setPosRepLoading] = useState(true)
   const [posReps, setPosReps] = useState(null)
 
   client.onopen = () => {
@@ -28,7 +29,8 @@ function App() {
   //Message will be an array of position reports for each aircraft
   client.onmessage = (message) => {
 
-    if(message.data.lat !== null){
+    if(message !== null){
+      console.log('message from ws: ', message)
       setPosReps([JSON.parse(message.data)])
     }
 
@@ -60,6 +62,8 @@ function App() {
         {!threatsError && !threatsLoading &&
         <ThreatGrid
           threats={threats}
+          posReps={posReps}
+          client={client}
           setThreats={setThreats}
           threatsError={threatsError}
           setThreatsError={setThreatsError}

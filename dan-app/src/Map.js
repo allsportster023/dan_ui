@@ -4,6 +4,9 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import './App.css';
 import './Map.css';
 
+let aircraftMarkerArr = [];
+
+
 export default function Map({threats, posReps}) {
 
     const mapContainer = useRef(null);
@@ -13,7 +16,6 @@ export default function Map({threats, posReps}) {
     const [zoom] = useState(7);
     const [API_KEY] = useState('Ce9hgYWIkaeo6JSNYZbf');
 
-    let aircraftMarkerArr = [];
 
     useEffect(() => {
         if (map.current) return;
@@ -85,7 +87,7 @@ export default function Map({threats, posReps}) {
         {
             posReps.map((posRep) => {
 
-                console.log(aircraftMarkerArr)
+                console.log("aircraftArr before: ", aircraftMarkerArr)
 
                 aircraftMarkerArr.map((marker) => {
 
@@ -106,7 +108,7 @@ export default function Map({threats, posReps}) {
                 aircraftMarkerArr = []
                 aircraftMarkerArr.push(newMarker)
 
-                console.log(aircraftMarkerArr)
+                console.log("aircraftArr after: ",aircraftMarkerArr)
 
             })
         }

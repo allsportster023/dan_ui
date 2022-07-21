@@ -10,6 +10,8 @@ const baseUrl = "http://localhost:8080/";
 export const ThreatGrid = (props) => {
     const {threats, 
         setThreats,
+        posReps,
+        client,
         threatsError,
         setThreatsError,
         threatsLoading,
@@ -40,6 +42,8 @@ export const ThreatGrid = (props) => {
             return (
               <Grid key={"gridId" + threat.id} item xs={3} style={{ maxWidth: 200}}>
                 <ThreatCard 
+                  posReps={posReps}
+                  client={client}
                   key={threat.id} 
                   threat={threat}
                   refreshThreatCards={refreshThreatCards}>

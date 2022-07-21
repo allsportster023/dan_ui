@@ -7,26 +7,17 @@ import { TargetSelect } from './TargetSelect'
 import { ThreatTypeSelect } from './ThreatTypeSelect'
 import { Box } from '@mui/system'
 
-const baseUrl = "http://localhost:8080/";
 
-
-export const ThreatCard = ({threat, refreshThreatCards}) => {
-  // const [threatDialogIsOpen, setThreatDialogIsOpen] = useState(false);
+export const ThreatCard = ({threat, refreshThreatCards, posReps, client}) => {
 
   const [target, setTarget] = useState(threat.target)
   const [threatType, setThreatType] = useState(threat.threatType)
-  const [submitError, setSubmitError] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false);
     
 
-    // const handleClickOpenDialog = () => {
-    //   setOpenDialog(true);
-    // };
+    function handleTargetChange(newTarget) {
+      setTarget(newTarget)
 
-    async function handleTargetChange(newTarget) {
-      setIsSubmitting(true);
-    try {
-      const res = await axios.put(baseUrl + "threats/" + threat.id, 
+      const updatedThreat =
       {
         name: threat.name,
         latitude: threat.latitude,
@@ -36,75 +27,17 @@ export const ThreatCard = ({threat, refreshThreatCards}) => {
         status: threat.status,
         az: threat.az,
         el: threat.el
-
-      });
-      console.log("res in change target: ", res);
-
-      setSubmitError(false);
-      setTarget(newTarget)
-      refreshThreatCards();
-    } catch (error) {
-      setSubmitError(error?.message);
-    } finally {
-      setIsSubmitting(false);
-    }
+      }
+      client.send(JSON.stringify(updatedThreat))
     }
   
-    // const handleCloseOpenDialog = () => {
-    //     setThreatDialogIsOpen(false);
-    //     refreshThreatCards();
-    // };
-
-    async function handleThreatTypeChange(newThreatType) {
-      setIsSubmitting(true);
-    try {
-      const res = await axios.put(baseUrl + "threats/" + threat.id, 
-      {
-        name: threat.name,
-        latitude: threat.latitude,
-        longitude: threat.longitude,
-        target: target,
-        threatType: newThreatType,
-        status: threat.status,
-        az: threat.az,
-        el: threat.el
-
-      });
-      console.log("res in change target: ", res);
-
-      setSubmitError(false);
+    function handleThreatTypeChange(newThreatType) {
       setThreatType(newThreatType)
-      refreshThreatCards();
-    } catch (error) {
-      setSubmitError(error?.message);
-    } finally {
-      setIsSubmitting(false);
+      const updatedThreat = {
+        someField: "someString"
+      }
+      client.send(JSON.stringify(updatedThreat))
     }
-    }
-
-    // async function handleSelectChange() {
-    //   setIsSubmitting(true);
-    // try {
-    //   const res = await axios.put(baseUrl + "threats/" + threat.id, 
-    //   {
-    //     name: threat.name,
-    //     latitude: threat.latitude,
-    //     longitude: threat.longitude,
-    //     target: target,
-    //     threatType: threatType,
-    //     status: threat.status
-    //   });
-    //   console.log("res in change target: ", res);
-
-    //   setSubmitError(false);
-    //   setTarget()
-    //   refreshThreatCards();
-    // } catch (error) {
-    //   setSubmitError(error?.message);
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
-    // }
 
 
   return (
@@ -138,17 +71,10 @@ export const ThreatCard = ({threat, refreshThreatCards}) => {
         <Typography sx={{ fontSize: 14 }} align="left" color="text.secondary" gutterBottom>
           Target: 
         </Typography>
-        <TargetSelect target={target} handleTargetChange={handleTargetChange}/>
-
+        <TargetSelect posReps={posReps} target={target} handleTargetChange={handleTargetChange}/>
         </Stack>
       </CardContent>
-      {/* <CardActions style={{ paddingTop: 0}}>
-        <Button size="small" onClick={() => setThreatDialogIsOpen(true)}>Edit</Button>
-      </CardActions> */}
     </Card>
-    {/* <ThreatDialog open={threatDialogIsOpen}
-    handleCloseOpenDialog={handleCloseOpenDialog}
-    threat={threat}/> */}
     </>
   )
 }
