@@ -1,6 +1,8 @@
 import './App.css';
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import Split from "react-split";
+
 import { ThreatGrid } from './components/ThreatGrid'
 import NavBar from "./NavBar";
 import Map from "./Map";
@@ -8,67 +10,63 @@ import { w3cwebsocket as W3CWebSocket } from "websocket";
 import {  ThemeProvider, createTheme} from '@mui/material'
 import baseTheme from "./muiThemes/baseTheme.js";
 
-const client = new W3CWebSocket('ws://192.168.1.183:6969');
+const posRepClient = new W3CWebSocket('ws://192.168.1.183:6969');
+const threatClient = new W3CWebSocket('ws://192.168.1.183:7060');
 // const client = new W3CWebSocket('ws://localhost:6969');
 const baseUrl = "http://localhost:8080/";
 
 function App() {
 
   const [theme, setTheme] = useState(baseTheme);
-  const [threatsError, setThreatsError] = useState(null)
-  const [threatsLoading, setThreatsLoading] = useState(true)
-  const [threats, setThreats] = useState([])
-  // const [posRepsError, setPosRepError] = useState(null)
-  // const [posRepsLoading, setPosRepLoading] = useState(true)
+  const [threats, setThreats] = useState(null)
   const [posReps, setPosReps] = useState(null)
 
-  client.onopen = () => {
+  posRepClient.onopen = () => {
     console.log('WebSocket Client Connected');
   };
 
   //Message will be an array of position reports for each aircraft
-  client.onmessage = (message) => {
+  posRepClient.onmessage = (message) => {
 
     if(message !== null){
-      console.log('message.data from ws: ', message.data)
+      console.log('message.data from posRepClient: ', JSON.parse(message.data))
       setPosReps([JSON.parse(message.data)])
     }
 
-    client.send("Hi")
+    posRepClient.send("Hi")
   };
 
-  useEffect(() => {
-    axios
-      .get(baseUrl + "threats")
-      .then((response) => {
-        console.log("threats: ", response.data)
+  threatClient.onopen = () => {
+    console.log('WebSocket ThreatClient Connected');
+  };
+  // threatClient.onerror = (error) => {
+  //   console.log("error event: ", error)
+  // }
 
-        setThreats(response.data);
-      })
-      .catch((err) => {
-        console.log("there was an error getting threats", err);
-        setThreatsError(err);
-      })
-      .finally(() => {
-        setThreatsLoading(false);
-      });
-  }, []);
+  //Message will be an array of threats
+  threatClient.onmessage = (message) => {
+
+    if(message !== null){
+      const test = JSON.parse(message.data)
+      setThreats(JSON.parse(message.data))
+    }
+
+    threatClient.send("Hello")
+  };
+
 
   return (
     <ThemeProvider theme={theme}>
     <div className="App">
       <NavBar />
-          {posReps && <Map threats={threats} posReps={posReps}/>}
-        {posReps &&
+        {posReps && threats && <Map threats={threats} posReps={posReps}/>}
+        {posReps && threats && 
         <ThreatGrid
           threats={threats}
           posReps={posReps}
-          client={client}
+          threatClient={threatClient}
           setThreats={setThreats}
-          threatsError={threatsError}
-          setThreatsError={setThreatsError}
-          threatsLoading={threatsLoading}
-          setThreatsLoading={setThreatsLoading}/>
+          />
         }
     </div>
     </ThemeProvider>

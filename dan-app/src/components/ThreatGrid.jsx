@@ -11,7 +11,7 @@ export const ThreatGrid = (props) => {
     const {threats, 
         setThreats,
         posReps,
-        client,
+        threatClient,
         threatsError,
         setThreatsError,
         threatsLoading,
@@ -40,11 +40,11 @@ export const ThreatGrid = (props) => {
         <Grid container spacing={2}>
         {threats.map((threat) => {
             return (
-              <Grid key={"gridId" + threat.id} item xs={3} style={{ maxWidth: 200}}>
+              <Grid key={"gridId" + threat.sam_id} item xs={3} style={{ width: 200}}>
                 <ThreatCard 
                   posReps={posReps}
-                  client={client}
-                  key={threat.id} 
+                  threatClient={threatClient}
+                  key={threat.sam_id} 
                   threat={threat}
                   refreshThreatCards={refreshThreatCards}>
                 </ThreatCard>

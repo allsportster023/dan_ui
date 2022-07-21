@@ -12,7 +12,6 @@ import axios from 'axios'
 
 export const TargetSelect = ({target, handleTargetChange, posReps}) => {
 
-    console.log('posReps in select: ', posReps)
 
     // fields in posRep: alt, gnd_spd, hdg, id, lat, lng, name, source, time
 

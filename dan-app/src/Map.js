@@ -7,11 +7,13 @@ import './Map.css';
 let aircraftMarkerArr = [];
 
 export default function Map({threats, posReps}) {
+    console.log('threats in map: ', threats)
+
 
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [lng] = useState(-76.11);
-    const [lat] = useState(37.21);
+    const [lng] = useState(-76.71);
+    const [lat] = useState(37.8);
     const [zoom] = useState(7);
     const [API_KEY] = useState('Ce9hgYWIkaeo6JSNYZbf');
 
@@ -64,16 +66,17 @@ export default function Map({threats, posReps}) {
 
         {
             threats.map((threat) => {
+                console.log('threat in map: ', threat)
 
                 var threatIcon = document.createElement('div');
                 threatIcon.classList.add('Map_SamMarker');
 
-                const threatPopup = `<h3>${threat.name}</h3><h3>Target: ${threat.target}</h3>`
+                const threatPopup = `<h3>${threat.sam_id}</h3><h3>Target: ${threat.cur_target}</h3>`
                 const threatPopup2 = new maplibregl.Popup().setHTML(threatPopup)
                 threatPopup2.className = 'Map_ThreatPopup'
 
                 new maplibregl.Marker(threatIcon)
-                    .setLngLat([threat.longitude, threat.latitude])
+                    .setLngLat([threat.long, threat.lat])
                     // .setPopup(new maplibregl.Popup().setHTML(threatPopup))
                     .setPopup(threatPopup2)
                     .addTo(map.current);
