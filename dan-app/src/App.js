@@ -1,8 +1,5 @@
 import './App.css';
-import React, { useState, useEffect } from 'react'
-import axios from 'axios';
-import Split from "react-split";
-import SplitPane from 'react-split-pane'
+import React, { useState } from 'react'
 
 import { ThreatGrid } from './components/ThreatGrid'
 import NavBar from "./NavBar";

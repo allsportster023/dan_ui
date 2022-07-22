@@ -3,7 +3,6 @@ import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './App.css';
 import './Map.css';
-import { render } from '@testing-library/react';
 
 let aircraftMarkerArr = [];
 let threatMarkerArr = [];
@@ -22,13 +21,13 @@ export default function Map({threats, posReps, focusedThreatId}) {
     useEffect(() => {
 
         //If we have a threat in mouse focus
-        if(focusedThreatId !== null) {
+        if (focusedThreatId !== null) {
 
             //Find the marker and change the size of the DIV element directly
             const focusIdx = threatMarkerArr.findIndex((t) => t._element.id === focusedThreatId)
             let focusMarker = threatMarkerArr[focusIdx]
 
-            if(focusMarker) {
+            if (focusMarker) {
                 focusMarker._element.style.width = "150px"
                 focusMarker._element.style.height = "150px"
             }
@@ -41,12 +40,13 @@ export default function Map({threats, posReps, focusedThreatId}) {
             })
         }
     }, [focusedThreatId])
+
     function getTargetCoords(name) {
         const target = posReps.filter((aircraft) => {
             return aircraft.name === name
         })
         console.log('target: ', target)
-        const coords = { lat: target[0].lat, lon: target[0].lng}
+        const coords = {lat: target[0].lat, lon: target[0].lng}
         console.log('targetCoords: ', coords)
         return coords
     }
@@ -58,50 +58,50 @@ export default function Map({threats, posReps, focusedThreatId}) {
 
                 threats.map((threat) => {
 
-                            let coords = {}
-                            if(threat.cur_target) {
+                    let coords = {}
+                    if (threat.cur_target) {
 
-                                coords = getTargetCoords(threat.cur_target)
-                            }
+                        coords = getTargetCoords(threat.cur_target)
+                    }
 
-                            if (map.current.getLayer(`${threat.sam_id}`)) {
-                                map.current.removeLayer(`${threat.sam_id}`);
+                    if (map.current.getLayer(`${threat.sam_id}`)) {
+                        map.current.removeLayer(`${threat.sam_id}`);
+                    }
+                    if (map.current.getSource(`${threat.sam_id}`)) {
+                        map.current.removeSource(`${threat.sam_id}`);
+                    }
+                    map.current.addSource(`${threat.sam_id}`, {
+                        'type': 'geojson',
+                        'data': {
+                            'type': 'Feature',
+                            'geometry': {
+                                'type': 'Polygon',
+                                'coordinates': [
+                                    [
+                                        [threat.long, threat.lat],
+                                        [coords.lon, coords.lat],
+                                        [coords.lon - 0.02, coords.lat - 0.02]
+                                    ]
+                                ]
                             }
-                            if (map.current.getSource(`${threat.sam_id}`)) {
-                                map.current.removeSource(`${threat.sam_id}`);
-                            }
-                            map.current.addSource(`${threat.sam_id}`, {
-                                'type': 'geojson',
-                                'data': {
-                                    'type': 'Feature',
-                                    'geometry': {
-                                        'type': 'Polygon',
-                                        'coordinates': [
-                                            [
-                                                [threat.long, threat.lat],
-                                                [coords.lon, coords.lat],
-                                                [coords.lon-0.02, coords.lat-0.02]
-                                            ]
-                                        ]
-                                    }
-                                }
-                            })
-                            map.current.addLayer({
-                                'id': `${threat.sam_id}`,
-                                'type': 'fill',
-                                'source': `${threat.sam_id}`,
-                                'layout': {},
-                                'paint': {
-                                    'fill-color': '#088',
-                                    'fill-opacity': 0.8
-                                }
-                            });
-                        })
+                        }
+                    })
+                    map.current.addLayer({
+                        'id': `${threat.sam_id}`,
+                        'type': 'fill',
+                        'source': `${threat.sam_id}`,
+                        'layout': {},
+                        'paint': {
+                            'fill-color': '#088',
+                            'fill-opacity': 0.8
+                        }
+                    });
+                })
 
-                }
+            }
 
         }
-    }, )
+    },)
 
 
     useEffect(() => {
@@ -114,8 +114,6 @@ export default function Map({threats, posReps, focusedThreatId}) {
         });
 
 
-
-
         map.current.addControl(new maplibregl.NavigationControl(), 'top-right');
 
         // map.current.on('mousemove', function (e) {
@@ -123,25 +121,25 @@ export default function Map({threats, posReps, focusedThreatId}) {
         // });
 
 
-            threats.map((threat) => {
+        threats.map((threat) => {
 
-                console.log('threat in map: ', threat)
+            console.log('threat in map: ', threat)
 
-                var threatIcon = document.createElement('div');
-                threatIcon.classList.add('Map_SamMarker');
-                threatIcon.id = threat.sam_id
+            var threatIcon = document.createElement('div');
+            threatIcon.classList.add('Map_SamMarker');
+            threatIcon.id = threat.sam_id
 
-                const threatPopupValue = `<h3>${threat.sam_id}</h3><h3>Target: ${threat.cur_target}</h3>`
-                const threatPopup = new maplibregl.Popup().setHTML(threatPopupValue)
-                threatPopup.className = 'Map_ThreatPopup'
+            const threatPopupValue = `<h3>${threat.sam_id}</h3><h3>Target: ${threat.cur_target}</h3>`
+            const threatPopup = new maplibregl.Popup().setHTML(threatPopupValue)
+            threatPopup.className = 'Map_ThreatPopup'
 
-                const threatMarker = new maplibregl.Marker(threatIcon)
-                    .setLngLat([threat.long, threat.lat])
-                    .setPopup(threatPopup)
-                    .addTo(map.current);
+            const threatMarker = new maplibregl.Marker(threatIcon)
+                .setLngLat([threat.long, threat.lat])
+                .setPopup(threatPopup)
+                .addTo(map.current);
 
-                threatMarkerArr.push(threatMarker)
-            })
+            threatMarkerArr.push(threatMarker)
+        })
 
     }, [threats, posReps]);
 
