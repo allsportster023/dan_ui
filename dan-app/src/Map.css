@@ -23,3 +23,21 @@
 .Map_ThreatPopup {
     background-color: blue;
 }
+
+.map-wrap {
+    position: relative;
+    width: 100vw;
+    height: calc(70vh - 60px); 
+    /* height: 'fill-content'; */
+    /* flex: 1 */
+
+  }
+  
+  .map {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    /* flex: 1 */
+
+  }

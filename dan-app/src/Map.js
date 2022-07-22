@@ -3,6 +3,7 @@ import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './App.css';
 import './Map.css';
+import { render } from '@testing-library/react';
 
 let aircraftMarkerArr = [];
 
@@ -14,8 +15,70 @@ export default function Map({threats, posReps}) {
     const map = useRef(null);
     const [lng] = useState(-76.71);
     const [lat] = useState(37.8);
-    const [zoom] = useState(7);
+    const [zoom] = useState(8);
     const [API_KEY] = useState('Ce9hgYWIkaeo6JSNYZbf');
+
+    function getTargetCoords(name) {
+        const target = posReps.filter((aircraft) => {
+            return aircraft.name === name
+        })
+        console.log('target: ', target)
+        const coords = { lat: target[0].lat, lon: target[0].lng}
+        console.log('targetCoords: ', coords)
+        return coords
+    }
+
+    useEffect(() => {
+        if (map.current) {
+            if (map.current.loaded()) {
+                console.log('am i running')
+                
+                threats.map((threat) => {
+                            
+                            let coords = {}
+                            if(threat.cur_target) {
+                                
+                                coords = getTargetCoords(threat.cur_target)
+                            }
+                            
+                            if (map.current.getLayer(`${threat.sam_id}`)) {
+                                map.current.removeLayer(`${threat.sam_id}`);
+                            }
+                            if (map.current.getSource(`${threat.sam_id}`)) {
+                                map.current.removeSource(`${threat.sam_id}`);
+                            }
+                            map.current.addSource(`${threat.sam_id}`, {
+                                'type': 'geojson',
+                                'data': {
+                                    'type': 'Feature',
+                                    'geometry': {
+                                        'type': 'Polygon',
+                                        'coordinates': [
+                                            [
+                                                [threat.long, threat.lat],
+                                                [coords.lon, coords.lat],
+                                                [coords.lon-0.02, coords.lat-0.02]
+                                            ]
+                                        ]
+                                    }
+                                }
+                            })
+                            map.current.addLayer({
+                                'id': `${threat.sam_id}`,
+                                'type': 'fill',
+                                'source': `${threat.sam_id}`,
+                                'layout': {},
+                                'paint': {
+                                    'fill-color': '#088',
+                                    'fill-opacity': 0.8
+                                }
+                            });
+                        })
+                    
+                }
+
+        }
+    }, )
 
 
     useEffect(() => {
@@ -27,68 +90,49 @@ export default function Map({threats, posReps}) {
             zoom: zoom
         });
 
+        
+    
+
         map.current.addControl(new maplibregl.NavigationControl(), 'top-right');
 
         // map.current.on('mousemove', function (e) {
         //     document.getElementById('info').innerHTML = JSON.stringify(e.lngLat.wrap());
         // });
 
-        map.current.once("load", () => {
-            // This code runs once the base style has finished loading.
 
-            map.current.addSource('maine', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'Feature',
-                    'geometry': {
-                        'type': 'Polygon',
-                        'coordinates': [
-                            [
-                                [-76.41, 36.81],
-                                [-75.75, 37.27],
-                                [-75.50, 37.05]]
-                        ]
-                    }
-                }
-            })
-
-            map.current.addLayer({
-                'id': 'maine',
-                'type': 'fill',
-                'source': 'maine',
-                'layout': {},
-                'paint': {
-                    'fill-color': '#088',
-                    'fill-opacity': 0.8
-                }
-            });
-        });
-
-        {
             threats.map((threat) => {
-                console.log('threat in map: ', threat)
 
+                console.log('threat in map: ', threat)
+                // if(threat.cur_target) {
+
+                //     coords = getTargetCoords(threat.cur_target)
+                // }
                 var threatIcon = document.createElement('div');
                 threatIcon.classList.add('Map_SamMarker');
 
-                const threatPopup = `<h3>${threat.sam_id}</h3><h3>Target: ${threat.cur_target}</h3>`
-                const threatPopup2 = new maplibregl.Popup().setHTML(threatPopup)
-                threatPopup2.className = 'Map_ThreatPopup'
+                const threatPopupValue = `<h3>${threat.sam_id}</h3><h3>Target: ${threat.cur_target}</h3>`
+                const threatPopup = new maplibregl.Popup().setHTML(threatPopupValue)
+                threatPopup.className = 'Map_ThreatPopup'
 
                 new maplibregl.Marker(threatIcon)
                     .setLngLat([threat.long, threat.lat])
-                    // .setPopup(new maplibregl.Popup().setHTML(threatPopup))
-                    .setPopup(threatPopup2)
+                    .setPopup(threatPopup)
                     .addTo(map.current);
-            })
-        }
+            // })
 
-    }, [threats]);
+        })
+
+        
+        
+    }, [threats, posReps]);
+
+    
+    
+    
+    
 
     useEffect(() => {
-
         {
-
             aircraftMarkerArr.map((marker) => {
                 marker.remove()
             })

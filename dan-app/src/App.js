@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import Split from "react-split";
+import SplitPane from 'react-split-pane'
 
 import { ThreatGrid } from './components/ThreatGrid'
 import NavBar from "./NavBar";
@@ -30,9 +31,8 @@ function App() {
 
     if(message !== null){
       console.log('message.data from posRepClient: ', JSON.parse(message.data))
-      setPosReps([JSON.parse(message.data)])
+      setPosReps(JSON.parse(message.data))
     }
-
     posRepClient.send("Hi")
   };
 
@@ -50,7 +50,6 @@ function App() {
       const test = JSON.parse(message.data)
       setThreats(JSON.parse(message.data))
     }
-
     threatClient.send("Hello")
   };
 
@@ -59,7 +58,13 @@ function App() {
     <ThemeProvider theme={theme}>
     <div className="App">
       <NavBar />
-        {posReps && threats && <Map threats={threats} posReps={posReps}/>}
+      {/* <SplitPane className =".Resizer" split="horizontal" minSize={100} maxSize={600} defaultSize={500}> */}
+        {posReps && threats && 
+        <Map 
+          threats={threats} 
+          posReps={posReps}
+          // style={{minHeight: 100, maxHeight: 300, height: '100%'}}
+        />}
         {posReps && threats && 
         <ThreatGrid
           threats={threats}
@@ -68,6 +73,7 @@ function App() {
           setThreats={setThreats}
           />
         }
+        {/* </SplitPane> */}
     </div>
     </ThemeProvider>
   );
