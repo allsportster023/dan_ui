@@ -45,10 +45,14 @@ export default function Map({threats, posReps, focusedThreatId}) {
         const target = posReps.filter((aircraft) => {
             return aircraft.name === name
         })
-        console.log('target: ', target)
-        const coords = {lat: target[0].lat, lon: target[0].lng}
-        console.log('targetCoords: ', coords)
-        return coords
+        if(target.length > 0) {
+            console.log('target: ', target)
+            const coords = {lat: target[0].lat, lon: target[0].lng}
+            console.log('targetCoords: ', coords)
+            return coords
+        } else {
+            return null
+        }
     }
 
     useEffect(() => {
@@ -70,32 +74,36 @@ export default function Map({threats, posReps, focusedThreatId}) {
                     if (map.current.getSource(`${threat.sam_id}`)) {
                         map.current.removeSource(`${threat.sam_id}`);
                     }
-                    map.current.addSource(`${threat.sam_id}`, {
-                        'type': 'geojson',
-                        'data': {
-                            'type': 'Feature',
-                            'geometry': {
-                                'type': 'Polygon',
-                                'coordinates': [
-                                    [
-                                        [threat.long, threat.lat],
-                                        [coords.lon, coords.lat],
-                                        [coords.lon - 0.02, coords.lat - 0.02]
+
+                    if(coords) {
+                        map.current.addSource(`${threat.sam_id}`, {
+                            'type': 'geojson',
+                            'data': {
+                                'type': 'Feature',
+                                'geometry': {
+                                    'type': 'Polygon',
+                                    'coordinates': [
+                                        [
+                                            [threat.long, threat.lat],
+                                            [coords.lon, coords.lat],
+                                            [coords.lon - 0.02, coords.lat - 0.02]
+                                        ]
                                     ]
-                                ]
+                                }
                             }
-                        }
-                    })
-                    map.current.addLayer({
-                        'id': `${threat.sam_id}`,
-                        'type': 'fill',
-                        'source': `${threat.sam_id}`,
-                        'layout': {},
-                        'paint': {
-                            'fill-color': '#088',
-                            'fill-opacity': 0.8
-                        }
-                    });
+                        })
+                        map.current.addLayer({
+                            'id': `${threat.sam_id}`,
+                            'type': 'fill',
+                            'source': `${threat.sam_id}`,
+                            'layout': {},
+                            'paint': {
+                                'fill-color': '#088',
+                                'fill-opacity': 0.8
+                            }
+                        });
+                    }
+
                 })
 
             }
