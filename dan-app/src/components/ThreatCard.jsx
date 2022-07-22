@@ -102,8 +102,8 @@ export const ThreatCard = ({threat, refreshThreatCards, posReps, threatClient, s
         <TargetSelect posReps={posReps} target={target} handleTargetChange={handleTargetChange}/>
         </Stack>
         <Typography sx={{ fontSize: 14 }} align="left" color="text.secondary" gutterBottom>
-          {/* Range to Target: {threat.cur_target ? threat.range_to_target : '-'} */}
-          Range to Target: {threat.range_to_target}
+          Range to Target: {threat.cur_target ? parseInt(threat.range_to_target) : '-'}
+          {/* Range to Target: {threat.range_to_target} */}
         </Typography>
       </CardContent>
     </Card>
