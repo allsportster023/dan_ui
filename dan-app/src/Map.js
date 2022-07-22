@@ -5,6 +5,7 @@ import './App.css';
 import './Map.css';
 
 let aircraftMarkerArr = [];
+let aircraftMarkerLabelArr = [];
 let threatMarkerArr = [];
 
 export default function Map({threats, posReps, focusedThreatId}) {
@@ -45,7 +46,7 @@ export default function Map({threats, posReps, focusedThreatId}) {
         const target = posReps.filter((aircraft) => {
             return aircraft.name === name
         })
-        if(target.length > 0) {
+        if (target.length > 0) {
             console.log('target: ', target)
             const coords = {lat: target[0].lat, lon: target[0].lng}
             console.log('targetCoords: ', coords)
@@ -75,7 +76,7 @@ export default function Map({threats, posReps, focusedThreatId}) {
                         map.current.removeSource(`${threat.sam_id}`);
                     }
 
-                    if(coords) {
+                    if (coords) {
                         map.current.addSource(`${threat.sam_id}`, {
                             'type': 'geojson',
                             'data': {
@@ -157,13 +158,20 @@ export default function Map({threats, posReps, focusedThreatId}) {
                 marker.remove()
             })
 
+            aircraftMarkerLabelArr.map((marker) => {
+                marker.remove()
+            })
+
             aircraftMarkerArr = []
+            aircraftMarkerLabelArr = []
 
             posReps.map((posRep) => {
                 let targetIcon = document.createElement('div');
                 targetIcon.classList.add('Map_AircraftMarker');
-                let label = document.createTextNode(posRep.name);
-                label.className = 'Map_AircraftLabel'
+
+                let targetLabel = document.createElement('div');
+                targetLabel.classList.add('Map_AircraftLabel');
+                targetLabel.innerText = posRep.name
 
                 console.log("Creating TargetIcon")
 
@@ -172,7 +180,12 @@ export default function Map({threats, posReps, focusedThreatId}) {
                     .setRotation(posRep.hdg)
                     .addTo(map.current);
 
+                const newMarkerLabel = new maplibregl.Marker(targetLabel)
+                    .setLngLat([posRep.lng, posRep.lat])
+                    .addTo(map.current);
+
                 aircraftMarkerArr.push(newMarker)
+                aircraftMarkerLabelArr.push(newMarkerLabel)
 
             })
         }
