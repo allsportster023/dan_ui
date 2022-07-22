@@ -6,11 +6,16 @@
     },
     {
       "id": 2,
-      "name": "Threat Type 2"
+      "name": "fuzzy_theory"
     },
     {
       "id": 3,
-      "name": "Threat Type 3"
+      "name": "zippy_funeral"
+    }
+,
+    {
+      "id": 4,
+      "name": "spiffy_proposal"
     }
   ]
 }

@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  dan-app-standalone:
+    container_name: dan-app-standalone
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - 3001:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+networks:
+  dan-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: dan-network
