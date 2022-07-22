@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import Split from "react-split";
+import SplitPane from 'react-split-pane'
 
 import { ThreatGrid } from './components/ThreatGrid'
 import NavBar from "./NavBar";
@@ -33,7 +34,6 @@ function App() {
       console.log('message.data from posRepClient: ', JSON.parse(message.data))
       setPosReps(JSON.parse(message.data))
     }
-
     posRepClient.send("Hi")
   };
 
@@ -51,7 +51,6 @@ function App() {
       const test = JSON.parse(message.data)
       setThreats(JSON.parse(message.data))
     }
-
     threatClient.send("Hello")
   };
 

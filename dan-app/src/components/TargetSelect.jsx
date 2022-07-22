@@ -21,8 +21,8 @@ export const TargetSelect = ({target, handleTargetChange, posReps}) => {
     };
     let menuItems = []
 
-      menuItems = posReps.map((posRep)=> {
-        return <MenuItem key={posRep.id} value={posRep.name}>
+      menuItems = posReps.map((posRep, id)=> {
+        return <MenuItem key={id} value={posRep.name}>
           <Typography 
             sx={{ fontSize: 14, pl: 1 }} 
             color="text.secondary"
