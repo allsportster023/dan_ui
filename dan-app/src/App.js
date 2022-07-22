@@ -8,8 +8,10 @@ import { w3cwebsocket as W3CWebSocket } from "websocket";
 import {  ThemeProvider, createTheme} from '@mui/material'
 import baseTheme from "./muiThemes/baseTheme.js";
 
-const posRepClient = new W3CWebSocket('ws://' + process.env.REACT_APP_API_URL + ':6969');
-const threatClient = new W3CWebSocket('ws://' + process.env.REACT_APP_API_URL + ':7060');
+// const posRepClient = new W3CWebSocket('ws://' + process.env.REACT_APP_API_URL + ':6969');
+const posRepClient = new W3CWebSocket('ws://192.168.1.183:6969');
+// const threatClient = new W3CWebSocket('ws://' + process.env.REACT_APP_API_URL + ':7060');
+const threatClient = new W3CWebSocket('ws://192.168.1.183:7060');
 // const client = new W3CWebSocket('ws://localhost:6969');
 const baseUrl = "http://localhost:8080/";
 

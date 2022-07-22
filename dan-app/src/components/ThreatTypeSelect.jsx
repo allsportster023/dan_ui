@@ -11,37 +11,37 @@ import {
 import axios from 'axios'
 
 //Manually importing the data for ease of use during hackathon
-import threatTypesData from '../data/db.json'
+// import threatTypesData from '../data/db.json'
 const baseUrl = "http://localhost:8080/";
 
 export const ThreatTypeSelect = ({threatType, handleThreatTypeChange}) => {
 
     const [threatTypesError, setThreatTypesError] = useState(null)
     const [threatTypesLoading, setThreatTypesLoading] = useState(true)
-    const [threatTypes, setThreatTypes] = useState(threatTypesData)
+    const [threatTypes, setThreatTypes] = useState(null)
 
     const handleChange = (event) => {
         console.log('event.target.value: ', event.target.value)
         handleThreatTypeChange(event.target.value);
       };
 
-    //TODO - we will want to add this to the Python backend
-    //
-    // useEffect(() => {
-    //     axios
-    //       .get(baseUrl + "threatTypes")
-    //       .then((response) => {
-    //         console.log("threatTypes in select component: ", response.data)
-    //         setThreatTypes(response.data);
-    //       })
-    //       .catch((err) => {
-    //         console.log("there was an error getting threatTypes", err);
-    //         setThreatTypesError(err);
-    //       })
-    //       .finally(() => {
-    //         setThreatTypesLoading(false);
-    //       });
-    //   }, []);
+    // TODO - we will want to add this to the Python backend
+    
+    useEffect(() => {
+        axios
+          .get(baseUrl + "threatTypes")
+          .then((response) => {
+            console.log("threatTypes in select component: ", response.data)
+            setThreatTypes(response.data);
+          })
+          .catch((err) => {
+            console.log("there was an error getting threatTypes", err);
+            setThreatTypesError(err);
+          })
+          .finally(() => {
+            setThreatTypesLoading(false);
+          });
+      }, []);
 
   return (
       <FormControl 
