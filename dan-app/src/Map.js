@@ -64,49 +64,51 @@ export default function Map({threats, posReps, focusedThreatId}) {
                 threats.map((threat) => {
 
                     let coords = {}
-                    if (threat.cur_target) {
-
-                        coords = getTargetCoords(threat.cur_target)
-                    }
-
                     if (map.current.getLayer(`${threat.sam_id}`)) {
                         map.current.removeLayer(`${threat.sam_id}`);
                     }
                     if (map.current.getSource(`${threat.sam_id}`)) {
                         map.current.removeSource(`${threat.sam_id}`);
                     }
+                    if (threat.cur_target) {
 
-                    if (coords) {
-                        map.current.addSource(`${threat.sam_id}`, {
-                            'type': 'geojson',
-                            'data': {
-                                'type': 'Feature',
-                                'geometry': {
-                                    'type': 'Polygon',
-                                    'coordinates': [
-                                        [
-                                            [threat.long, threat.lat],
-                                            [coords.lon, coords.lat],
-                                            [coords.lon - 0.02, coords.lat - 0.02]
+                        coords = getTargetCoords(threat.cur_target)
+                        if (coords) {
+                            map.current.addSource(`${threat.sam_id}`, {
+                                'type': 'geojson',
+                                'data': {
+                                    'type': 'Feature',
+                                    'geometry': {
+                                        'type': 'Polygon',
+                                        'coordinates': [
+                                            [
+                                                [threat.long, threat.lat],
+                                                [coords.lon, coords.lat],
+                                                [coords.lon - 0.02, coords.lat - 0.02]
+                                            ]
                                         ]
-                                    ]
+                                    }
                                 }
-                            }
-                        })
-                        map.current.addLayer({
-                            'id': `${threat.sam_id}`,
-                            'type': 'fill',
-                            'source': `${threat.sam_id}`,
-                            'layout': {},
-                            'paint': {
-                                // 'fill-color': '#088',
-                                'fill-color': threat.status === 'not ready' ? '#9ea0a3'
-                                : threat.status === 'moving' ? '#e3e84a'
-                                : '#3ca836',
-                                'fill-opacity': 0.8
-                            }
-                        });
+                            })
+                            map.current.addLayer({
+                                'id': `${threat.sam_id}`,
+                                'type': 'fill',
+                                'source': `${threat.sam_id}`,
+                                'layout': {},
+                                'paint': {
+                                    // 'fill-color': '#088',
+                                    'fill-color': threat.status === 'not ready' ? '#9ea0a3'
+                                    : threat.status === 'moving' ? '#e3e84a'
+                                    : '#3ca836',
+                                    'fill-opacity': 0.8
+                                }
+                            });
+                        }
                     }
+
+                    
+
+                    
 
                 })
 
