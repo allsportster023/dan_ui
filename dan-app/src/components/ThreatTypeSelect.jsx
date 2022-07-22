@@ -26,22 +26,22 @@ export const ThreatTypeSelect = ({threatType, handleThreatTypeChange}) => {
       };
 
     //TODO - we will want to add this to the Python backend
-    //
-    // useEffect(() => {
-    //     axios
-    //       .get(baseUrl + "threatTypes")
-    //       .then((response) => {
-    //         console.log("threatTypes in select component: ", response.data)
-    //         setThreatTypes(response.data);
-    //       })
-    //       .catch((err) => {
-    //         console.log("there was an error getting threatTypes", err);
-    //         setThreatTypesError(err);
-    //       })
-    //       .finally(() => {
-    //         setThreatTypesLoading(false);
-    //       });
-    //   }, []);
+
+    useEffect(() => {
+        axios
+          .get(baseUrl + "threatTypes")
+          .then((response) => {
+            console.log("threatTypes in select component: ", response.data)
+            setThreatTypes(response.data);
+          })
+          .catch((err) => {
+            console.log("there was an error getting threatTypes", err);
+            setThreatTypesError(err);
+          })
+          .finally(() => {
+            setThreatTypesLoading(false);
+          });
+      }, []);
 
   return (
       <FormControl 
