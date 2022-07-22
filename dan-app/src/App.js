@@ -20,6 +20,7 @@ function App() {
   const [theme, setTheme] = useState(baseTheme);
   const [threats, setThreats] = useState(null)
   const [posReps, setPosReps] = useState(null)
+  const [focusedThreatId, setFocusedThreatId] = useState(null)
 
   posRepClient.onopen = () => {
     console.log('WebSocket Client Connected');
@@ -30,7 +31,7 @@ function App() {
 
     if(message !== null){
       console.log('message.data from posRepClient: ', JSON.parse(message.data))
-      setPosReps([JSON.parse(message.data)])
+      setPosReps(JSON.parse(message.data))
     }
 
     posRepClient.send("Hi")
@@ -59,13 +60,14 @@ function App() {
     <ThemeProvider theme={theme}>
     <div className="App">
       <NavBar />
-        {posReps && threats && <Map threats={threats} posReps={posReps}/>}
+        {posReps && threats && <Map threats={threats} posReps={posReps} focusedThreatId={focusedThreatId}/>}
         {posReps && threats && 
         <ThreatGrid
           threats={threats}
           posReps={posReps}
           threatClient={threatClient}
           setThreats={setThreats}
+          setFocusedThreatId={setFocusedThreatId}
           />
         }
     </div>

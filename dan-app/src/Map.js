@@ -5,8 +5,9 @@ import './App.css';
 import './Map.css';
 
 let aircraftMarkerArr = [];
+let threatMarkerArr = [];
 
-export default function Map({threats, posReps}) {
+export default function Map({threats, posReps, focusedThreatId}) {
     console.log('threats in map: ', threats)
 
 
@@ -17,6 +18,28 @@ export default function Map({threats, posReps}) {
     const [zoom] = useState(7);
     const [API_KEY] = useState('Ce9hgYWIkaeo6JSNYZbf');
 
+    useEffect(() => {
+
+        //If we have a threat in mouse focus
+        if(focusedThreatId !== null) {
+
+            //Find the marker and change the size of the DIV element directly
+            const focusIdx = threatMarkerArr.findIndex((t) => t._element.id === focusedThreatId)
+            let focusMarker = threatMarkerArr[focusIdx]
+
+            if(focusMarker) {
+                focusMarker._element.style.width = "150px"
+                focusMarker._element.style.height = "150px"
+            }
+        } else {
+            //If none of the threats are in focus, just reset the size
+            //   to null so that the CSS class defines it
+            threatMarkerArr.forEach((m) => {
+                m._element.style.width = null
+                m._element.style.height = null
+            })
+        }
+    }, [focusedThreatId])
 
     useEffect(() => {
         if (map.current) return;
@@ -70,16 +93,19 @@ export default function Map({threats, posReps}) {
 
                 var threatIcon = document.createElement('div');
                 threatIcon.classList.add('Map_SamMarker');
+                threatIcon.id = threat.sam_id
 
                 const threatPopup = `<h3>${threat.sam_id}</h3><h3>Target: ${threat.cur_target}</h3>`
                 const threatPopup2 = new maplibregl.Popup().setHTML(threatPopup)
                 threatPopup2.className = 'Map_ThreatPopup'
 
-                new maplibregl.Marker(threatIcon)
+                const threatMarker = new maplibregl.Marker(threatIcon)
                     .setLngLat([threat.long, threat.lat])
                     // .setPopup(new maplibregl.Popup().setHTML(threatPopup))
                     .setPopup(threatPopup2)
                     .addTo(map.current);
+
+                threatMarkerArr.push(threatMarker)
             })
         }
 

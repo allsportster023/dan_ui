@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Card, CardActions, CardContent, Stack, Typography } from '@mui/material'
+import {Button, Card, CardActions, CardContent, Stack, Typography} from '@mui/material'
 import axios from 'axios'
 
 import { TargetSelect } from './TargetSelect'
@@ -7,11 +7,11 @@ import { ThreatTypeSelect } from './ThreatTypeSelect'
 import { Box } from '@mui/system'
 
 
-export const ThreatCard = ({threat, refreshThreatCards, posReps, threatClient}) => {
+export const ThreatCard = ({threat, refreshThreatCards, posReps, threatClient, setFocusedThreatId}) => {
 
   const [target, setTarget] = useState(threat.cur_target)
   const [threatType, setThreatType] = useState(threat.cur_threat)
-    
+  const [isFocused, setIsFocused] = useState(false)
 
     function handleTargetChange(newTarget) {
       setTarget(newTarget)
@@ -56,10 +56,22 @@ export const ThreatCard = ({threat, refreshThreatCards, posReps, threatClient}) 
       threatClient.send(JSON.stringify(updatedThreat))
     }
 
+  function handleMouseOut() {
+    setFocusedThreatId(null)
+    setIsFocused(false)
+  }
+
+  function handleMouseOver(threat) {
+    setFocusedThreatId(threat.sam_id)
+    setIsFocused(true)
+  }
 
   return (
     <>
-    <Card sx={{ width: 200, height: 140, m: 2}}>
+    <Card sx={{ width: 200, height: 140, m: 2}}
+          style={{boxShadow: !isFocused ? "" : "4px 10px 7px -7px rgba(0,0,0,0.2),2px 5px 5px 2px rgba(0,0,0,0.14),2px 5px 7px 2px rgba(0,0,0,0.12)"}}
+          onMouseOver={(e) => handleMouseOver(threat)}
+          onMouseOut={(e) => handleMouseOut()}>
       <CardContent sx={{backgroundColor: '#fafcff'}}>
         <Stack direction="row" style={{justifyContent: "flex-end"}}>
           <Box 

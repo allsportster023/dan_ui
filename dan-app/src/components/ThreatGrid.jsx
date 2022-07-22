@@ -5,8 +5,6 @@ import React, { useEffect, useState} from 'react'
 
 import { ThreatCard } from './ThreatCard'
 
-const baseUrl = "http://localhost:8080/";
-
 export const ThreatGrid = (props) => {
     const {threats, 
         setThreats,
@@ -15,25 +13,11 @@ export const ThreatGrid = (props) => {
         threatsError,
         setThreatsError,
         threatsLoading,
-        setThreatsLoading
+        setThreatsLoading,
+        setFocusedThreatId
         } = props
 
 
-    async function refreshThreatCards(threatId) {
-        axios
-        .get(baseUrl + "threats")
-        .then((response) => {
-          console.log("threats: ", response.data)
-          setThreats(response.data);
-        })
-        .catch((err) => {
-          console.log("there was an error getting threats", err);
-          setThreatsError(err);
-        })
-        .finally(() => {
-          setThreatsLoading(false);
-        });
-      }
 
   return (
     <Container sx={{ flexGrow: 1 }}>
@@ -44,9 +28,9 @@ export const ThreatGrid = (props) => {
                 <ThreatCard 
                   posReps={posReps}
                   threatClient={threatClient}
-                  key={threat.sam_id} 
-                  threat={threat}
-                  refreshThreatCards={refreshThreatCards}>
+                  key={threat.sam_id}
+                  setFocusedThreatId={setFocusedThreatId}
+                  threat={threat}>
                 </ThreatCard>
               </Grid>
             )
