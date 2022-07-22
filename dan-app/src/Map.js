@@ -98,7 +98,10 @@ export default function Map({threats, posReps, focusedThreatId}) {
                             'source': `${threat.sam_id}`,
                             'layout': {},
                             'paint': {
-                                'fill-color': '#088',
+                                // 'fill-color': '#088',
+                                'fill-color': threat.status === 'not ready' ? '#9ea0a3'
+                                : threat.status === 'moving' ? '#e3e84a'
+                                : '#3ca836',
                                 'fill-opacity': 0.8
                             }
                         });

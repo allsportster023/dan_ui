@@ -45,13 +45,10 @@ export const ThreatTypeSelect = ({threatType, handleThreatTypeChange}) => {
 
 
   return (
-    // <Box sx={{ mt: 4, minWidth: 120 }}>
       <FormControl 
-        // style={{ width: 140}} 
 
         fullWidth={true}
         variant="standard" >
-        {/* <InputLabel id="threatType-label">Threat Type</InputLabel> */}
         <Select
           labelId="threatType-label"
           id="threatType-id"
@@ -59,7 +56,6 @@ export const ThreatTypeSelect = ({threatType, handleThreatTypeChange}) => {
           label="Threat Type"
           onChange={handleChange}
           disableUnderline
-          // defaultValue=""
         >
             {!threatTypesError && !threatTypesLoading && threatTypes.map((type)=> {
                 return <MenuItem key={type.id} value={type.name}>
@@ -71,17 +67,7 @@ export const ThreatTypeSelect = ({threatType, handleThreatTypeChange}) => {
                 </MenuItem>
             })}
         </Select>
-        {/* <TextField
-          select
-          variant="filled"
-          value={threatType}
-          hiddenLabel
-        >
-          {!threatTypesError && !threatTypesLoading && threatTypes.map((type)=> {
-                return <MenuItem key={type.id} value={type.name}>{type.name}</MenuItem>
-            })}
-        </TextField> */}
+    
       </FormControl>
-    // </Box>
   )
 }
