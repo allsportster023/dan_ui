@@ -14,7 +14,7 @@ export const ThreatCard = ({threat, refreshThreatCards, posReps, threatClient, s
   const [isFocused, setIsFocused] = useState(false)
 
     function handleTargetChange(newTarget) {
-      setTarget(newTarget)
+      // setTarget(newTarget)
       // if(newTarget === 'None') {
       //   newTarget = ''
       // }
@@ -38,7 +38,7 @@ export const ThreatCard = ({threat, refreshThreatCards, posReps, threatClient, s
     }
   
     function handleThreatTypeChange(newThreatType) {
-      setThreatType(newThreatType)
+      // setThreatType(newThreatType)
       const updatedThreat =
       {
         sam_id: threat.sam_id,
@@ -93,16 +93,17 @@ export const ThreatCard = ({threat, refreshThreatCards, posReps, threatClient, s
         <Typography sx={{ fontSize: 14}} align="left" color="text.secondary" gutterBottom>
           Type: 
         </Typography>     
-        <ThreatTypeSelect threatType={threatType} handleThreatTypeChange={handleThreatTypeChange}/>
+        <ThreatTypeSelect threatType={threat.cur_threat} handleThreatTypeChange={handleThreatTypeChange}/>
         </Stack>   
         <Stack direction="row">
         <Typography sx={{ fontSize: 14 }} align="left" color="text.secondary" gutterBottom>
           Target: 
         </Typography>
-        <TargetSelect posReps={posReps} target={target} handleTargetChange={handleTargetChange}/>
+        <TargetSelect posReps={posReps} target={threat.cur_target} handleTargetChange={handleTargetChange}/>
         </Stack>
         <Typography sx={{ fontSize: 14 }} align="left" color="text.secondary" gutterBottom>
-          Range to Target: {threat.cur_target ? parseInt(threat.range_to_target) : '-'}
+          Range to Target: {threat.cur_target === "None" ? '-' 
+          : threat.cur_target ? parseInt(threat.range_to_target) : '-'}
           {/* Range to Target: {threat.range_to_target} */}
         </Typography>
       </CardContent>
