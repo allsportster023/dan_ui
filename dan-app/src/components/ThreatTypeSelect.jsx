@@ -25,8 +25,8 @@ export const ThreatTypeSelect = ({threatType, handleThreatTypeChange}) => {
         handleThreatTypeChange(event.target.value);
       };
 
-    // TODO - we will want to add this to the Python backend
-    
+    //TODO - we will want to add this to the Python backend
+
     useEffect(() => {
         axios
           .get(baseUrl + "threatTypes")
