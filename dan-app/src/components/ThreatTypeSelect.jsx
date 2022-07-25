@@ -54,20 +54,20 @@ export const ThreatTypeSelect = ({ cur_threat, handleThreatTypeChange }) => {
 
   return (
     <FormControl fullWidth={true} variant="standard">
-      <Select
-        labelId="threatType-label"
-        id="threatType-id"
-        value={cur_threat}
-        label="Threat Type"
-        onChange={handleChange}
-        disableUnderline
-      >
-        {threatTypesLoading || threatTypeLoading ? (
-          <CircularIndeterminate />
-        ) : threatTypesError ? (
-          "Error"
-        ) : (
-          threatTypes.map((type) => {
+      {threatTypesLoading || threatTypeLoading ? (
+        <CircularIndeterminate />
+      ) : threatTypesError ? (
+        "Error"
+      ) : (
+        <Select
+          labelId="threatType-label"
+          id="threatType-id"
+          value={cur_threat}
+          label="Threat Type"
+          onChange={handleChange}
+          disableUnderline
+        >
+          {threatTypes.map((type) => {
             return (
               <MenuItem key={type.id} value={type.name}>
                 {/* {type.name} */}
@@ -80,9 +80,9 @@ export const ThreatTypeSelect = ({ cur_threat, handleThreatTypeChange }) => {
                 </Typography>
               </MenuItem>
             );
-          })
-        )}
-      </Select>
+          })}
+        </Select>
+      )}
     </FormControl>
   );
 };
