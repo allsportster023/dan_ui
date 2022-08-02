@@ -11,7 +11,7 @@ import {
 import axios from "axios";
 
 import CircularIndeterminate from "./CircularIndeterminate";
-
+import { threatTypesData } from "../data/db";
 //Manually importing the data for ease of use during hackathon
 // import threatTypesData from '../data/db.json'
 const baseUrl = "http://localhost:8080/";
@@ -37,20 +37,23 @@ export const ThreatTypeSelect = ({ cur_threat, handleThreatTypeChange }) => {
   //TODO - we will want to add this to the Python backend
 
   useEffect(() => {
-    axios
-      .get(baseUrl + "threatTypes")
-      .then((response) => {
-        console.log("threatTypes in select component: ", response.data);
-        setThreatTypes(response.data);
-      })
-      .catch((err) => {
-        console.log("there was an error getting threatTypes", err);
-        setThreatTypesError(err);
-      })
-      .finally(() => {
-        setThreatTypesLoading(false);
-      });
-  }, []);
+    setThreatTypes(threatTypesData);
+    setThreatTypesLoading(false);
+    setThreatTypesError(null);
+    // //axios
+    //   .get(baseUrl + "threatTypes")
+    //   .then((response) => {
+    //     console.log("threatTypes in select component: ", response.data);
+    //     setThreatTypes(response.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log("there was an error getting threatTypes", err);
+    //     setThreatTypesError(err);
+    //   })
+    //   .finally(() => {
+    //     setThreatTypesLoading(false);
+    //   });
+  }, [] );
 
   return (
     <FormControl fullWidth={true} variant="standard">
