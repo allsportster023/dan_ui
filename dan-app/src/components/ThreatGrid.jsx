@@ -1,41 +1,34 @@
-import { Card, Container, Grid, Stack} from '@mui/material'
-import axios from 'axios';
+import { Container, Grid } from "@mui/material";
 
-import React, { useEffect, useState} from 'react'
+import React from "react";
 
-import { ThreatCard } from './ThreatCard'
+import { ThreatCard } from "./ThreatCard";
 
 export const ThreatGrid = (props) => {
-    const {threats, 
-        setThreats,
-        posReps,
-        threatClient,
-        threatsError,
-        setThreatsError,
-        threatsLoading,
-        setThreatsLoading,
-        setFocusedThreatId
-        } = props
-
-
+  const { threats, posReps, threatClient, setFocusedThreatId } = props;
 
   return (
     <Container sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
+      <Grid container spacing={2}>
         {threats.map((threat) => {
-            return (
-              <Grid key={"gridId" + threat.sam_id} item xs={3} style={{ width: 200}}>
-                <ThreatCard 
-                  posReps={posReps}
-                  threatClient={threatClient}
-                  key={threat.sam_id}
-                  setFocusedThreatId={setFocusedThreatId}
-                  threat={threat}>
-                </ThreatCard>
-              </Grid>
-            )
+          return (
+            <Grid
+              key={"gridId" + threat.sam_id}
+              item
+              xs={3}
+              style={{ width: 200 }}
+            >
+              <ThreatCard
+                posReps={posReps}
+                threatClient={threatClient}
+                key={threat.sam_id}
+                setFocusedThreatId={setFocusedThreatId}
+                threat={threat}
+              ></ThreatCard>
+            </Grid>
+          );
         })}
-        </Grid>
+      </Grid>
     </Container>
-  )
-}
+  );
+};

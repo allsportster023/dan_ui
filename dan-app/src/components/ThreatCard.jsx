@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
-import axios from "axios";
+import { Card, CardContent, Stack, Typography } from "@mui/material";
 
 import { TargetSelect } from "./TargetSelect";
 import { ThreatTypeSelect } from "./ThreatTypeSelect";

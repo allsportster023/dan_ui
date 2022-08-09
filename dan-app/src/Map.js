@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import maplibregl from "maplibre-gl";
+import LatLon from "geodesy/latlon-spherical.js";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./App.css";
 import "./Map.css";
@@ -15,6 +16,8 @@ export default function Map({ threats, posReps, focusedThreatId }) {
   const [lat] = useState(37.8);
   const [zoom] = useState(8);
   const [API_KEY] = useState("Ce9hgYWIkaeo6JSNYZbf");
+  // used to calculate threat polygons
+  const BEARING_OFFSET = 2;
 
   useEffect(() => {
     //If we have a threat in mouse focus
@@ -39,6 +42,7 @@ export default function Map({ threats, posReps, focusedThreatId }) {
     }
   }, [focusedThreatId]);
 
+  // returns coords with lat first, lon second
   function getTargetCoords(name) {
     const target = posReps.filter((aircraft) => {
       return aircraft.name === name;
@@ -52,11 +56,26 @@ export default function Map({ threats, posReps, focusedThreatId }) {
     }
   }
 
+  function getTargetOffsetCoordsForPolygonDisplay(threat, target) {
+    // using geodesy functions to get offset coords
+    const distToTarget = threat.distanceTo(target);
+    const bearingToTarget = threat.initialBearingTo(target);
+    const offsetCoords1 = threat.destinationPoint(
+      distToTarget,
+      bearingToTarget - BEARING_OFFSET
+    );
+    const offsetCoords2 = threat.destinationPoint(
+      distToTarget,
+      bearingToTarget + BEARING_OFFSET
+    );
+    return { offsetCoords1, offsetCoords2 };
+  }
+
   useEffect(() => {
     if (map.current) {
       if (map.current.loaded()) {
-        threats.map((threat) => {
-          let coords = {};
+        threats.forEach((threat) => {
+          let targetCoords = {};
           if (map.current.getLayer(`${threat.sam_id}`)) {
             map.current.removeLayer(`${threat.sam_id}`);
           }
@@ -64,8 +83,20 @@ export default function Map({ threats, posReps, focusedThreatId }) {
             map.current.removeSource(`${threat.sam_id}`);
           }
           if (threat.cur_target) {
-            coords = getTargetCoords(threat.cur_target);
-            if (coords) {
+            targetCoords = getTargetCoords(threat.cur_target);
+            if (targetCoords) {
+              // create a geodesy LatLon object for the threat
+              let geodesyThreat = new LatLon(threat.lat, threat.long);
+              // create a geodesy LatLon object for the target
+              let geodesyTarget = new LatLon(
+                targetCoords.lat,
+                targetCoords.lon
+              );
+              let offsetCoords = getTargetOffsetCoordsForPolygonDisplay(
+                geodesyThreat,
+                geodesyTarget
+              );
+              let { offsetCoords1, offsetCoords2 } = offsetCoords;
               map.current.addSource(`${threat.sam_id}`, {
                 type: "geojson",
                 data: {
@@ -75,8 +106,8 @@ export default function Map({ threats, posReps, focusedThreatId }) {
                     coordinates: [
                       [
                         [threat.long, threat.lat],
-                        [coords.lon, coords.lat],
-                        [coords.lon - 0.02, coords.lat - 0.02],
+                        [offsetCoords1.lon, offsetCoords1.lat],
+                        [offsetCoords2.lon, offsetCoords2.lat],
                       ],
                     ],
                   },
@@ -120,7 +151,7 @@ export default function Map({ threats, posReps, focusedThreatId }) {
     //     document.getElementById('info').innerHTML = JSON.stringify(e.lngLat.wrap());
     // });
 
-    threats.map((threat) => {
+    threats.forEach((threat) => {
       console.log("threat in map: ", threat);
 
       var threatIcon = document.createElement("div");
@@ -143,18 +174,18 @@ export default function Map({ threats, posReps, focusedThreatId }) {
   useEffect(() => {
     console.log("Creating TargetIcons");
 
-    aircraftMarkerArr.map((marker) => {
+    aircraftMarkerArr.forEach((marker) => {
       marker.remove();
     });
 
-    aircraftMarkerLabelArr.map((marker) => {
+    aircraftMarkerLabelArr.forEach((marker) => {
       marker.remove();
     });
 
     aircraftMarkerArr = [];
     aircraftMarkerLabelArr = [];
 
-    posReps.map((posRep) => {
+    posReps.forEach((posRep) => {
       let targetIcon = document.createElement("div");
       targetIcon.classList.add("Map_AircraftMarker");
 

@@ -5,7 +5,7 @@ import { ThreatGrid } from "./components/ThreatGrid";
 import NavBar from "./NavBar";
 import Map from "./Map";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
-import { ThemeProvider, createTheme } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import baseTheme from "./muiThemes/baseTheme.js";
 
 // const posRepClient = new W3CWebSocket('ws://' + process.env.REACT_APP_API_URL + ':6969');
@@ -16,7 +16,7 @@ const posRepClient = new W3CWebSocket("ws://localhost:6969");
 const threatClient = new W3CWebSocket("ws://localhost:7060");
 
 function App() {
-  const [theme, setTheme] = useState(baseTheme);
+  const [theme] = useState(baseTheme);
   const [threats, setThreats] = useState(null);
   const [posReps, setPosReps] = useState(null);
   const [focusedThreatId, setFocusedThreatId] = useState(null);
